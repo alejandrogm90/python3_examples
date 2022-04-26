@@ -1,8 +1,13 @@
 #!/usr/bin/env python3
 
+import sqlite3
 from calendar import monthrange
 
 def isDate(cadena):
+    """ Check is the text recived is a rigth date
+    :param cadena: datatime text (YYYY-MM-DD)
+    :return: True or False
+    """
     if len(cadena) != 10:
         return False
         
@@ -26,3 +31,18 @@ def isDate(cadena):
         return False
 
     return True
+
+
+def create_sqlitle3_connection(db_file):
+    """ create a database connection to the SQLite database
+        specified by db_file
+    :param db_file: database file
+    :return: Connection object or None
+    """
+    conn = None
+    try:
+        conn = sqlite3.connect(db_file)
+    except sqlite3.Error as e:
+        print(e)
+
+    return conn
