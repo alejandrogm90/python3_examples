@@ -1,8 +1,8 @@
-# Welcome to python-examples
-Simple examples of python
+# Welcome to python3_examples
+Simple examples of python3
 
 ## Bibliography ##
-- Python [Official Website](https://www.pyhton.org/)
+- Python3 [Official Website](https://www.pyhton.org/)
 
 ## Community ##
 - [x] [Alejandro Gómez](https://github.com/alejandrogm90) @alejandrogm90
