@@ -1,7 +1,7 @@
 <!-- Improved compatibility of back to top link -->
 <a name="readme-top"></a>
 
-[proyect-version]
+[!proyect-version]
 
 <!-- TABLE OF CONTENTS -->
 <details>
