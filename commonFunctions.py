@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import sqlite3
+import pyfiglet
 from calendar import monthrange
 
 def isDate(cadena):
@@ -46,3 +47,16 @@ def create_sqlitle3_connection(db_file):
         print(e)
 
     return conn
+
+
+def printBanner(character, sice, textList):
+    """ Add Banner character, sice, text """
+    print(character * sice)
+    for line in textList:
+        print(line)
+    print(character * sice)
+
+
+def printMegaBanner(text):
+    ascii_banner = pyfiglet.figlet_format(text)
+    print(ascii_banner)
