@@ -18,11 +18,16 @@
 
 import datetime
 import random
+import commonFunctions as cf
 
 today = datetime.date.today()
 
-print('La fecha actual es : '+str(datetime.datetime.now()))
-print('La fecha actual es : '+today.ctime())
+# Add Banner
+cf.printMegaBanner("Prueba")
+textList = list()
+textList.append('La fecha actual en formato datetime : '+str(datetime.datetime.now()))
+textList.append('La fecha actual en formato ctime : '+today.ctime())
+cf.printBanner("-", 50, textList)
 
 w = list()
 for i in range(100):

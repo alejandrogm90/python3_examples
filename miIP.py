@@ -22,6 +22,7 @@ import urllib.request
 
 
 def IP_local():
+    """ Return your local IP """
     respuesta = ""
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.connect(("8.8.8.8", 80))
@@ -31,6 +32,7 @@ def IP_local():
 
 
 def IP_global():
+    """ Return your global IP """
     response = urllib.request.urlopen('http://www.vermiip.es/')
     html = response.read()
     cad1 = str(html)

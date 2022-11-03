@@ -28,8 +28,9 @@ def sustituirCadena(cad):
             str('${'+str(elemento)+'}'), str(BIBLIOTECA[elemento]))
     return cad_temp
 
-# Limpia los extremos de las cadena
+
 def lc1(cad):
+    """ Limpia los extremos de las cadena """
     cad_limp = cad.rstrip()
     return cad_limp.lstrip()
 
