@@ -1,4 +1,20 @@
 #!/usr/bin/env python3
+#
+#
+#       Copyright 2022 Alejandro Gomez
+#
+#       This program is free software: you can redistribute it and/or modify
+#       it under the terms of the GNU General Public License as published by
+#       the Free Software Foundation, either version 3 of the License, or
+#       (at your option) any later version.
+#
+#       This program is distributed in the hope that it will be useful,
+#       but WITHOUT ANY WARRANTY; without even the implied warranty of
+#       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#       GNU General Public License for more details.
+#
+#       You should have received a copy of the GNU General Public License
+#       along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import sqlite3
 import pyfiglet
@@ -60,3 +76,14 @@ def printBanner(character, sice, textList):
 def printMegaBanner(text):
     ascii_banner = pyfiglet.figlet_format(text)
     print(ascii_banner)
+
+
+def printFileEncoded(nombre):
+    f1 = open(nombre,'r')
+    linea = f1.readline()
+    while (len(linea) > 0):
+        nueva = ""
+        for pos in range(0,len(linea)-1):
+            nueva = nueva + str(chr(ord(linea[pos])+1))
+        print(nueva)
+        linea = f1.readline()
