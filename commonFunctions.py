@@ -17,9 +17,11 @@
 #       along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
+import logging
 import sqlite3
 import pyfiglet
 from calendar import monthrange
+
 
 def isDate(cadena):
     """ Check is the text recived is a rigth date
@@ -84,6 +86,7 @@ def printBanner(character, textList):
             print(character+" "+line+spaces+character)
     print(character * (line_size + 4))
 
+
 def printMegaBanner(text):
     """ Print a big banner
     :param text: text to print
@@ -126,3 +129,12 @@ def getFiletName(location,extension=False):
                 name2 += name1.split(SPLITER_2)[part2]
 
     return name2
+
+
+def errorBreak(num,msg):
+    """ Show a menssage text and exits with output number
+    :param num: output number
+    :param msg: output menssage
+    """
+    logging.error(msg)
+    exit(num)
