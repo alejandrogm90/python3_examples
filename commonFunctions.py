@@ -21,6 +21,13 @@ import logging
 import sqlite3
 import pyfiglet
 from calendar import monthrange
+from time import gmtime, strftime  
+
+def getTime():
+    """ Return a complete date as YYYY-MM-dd HH:mm
+    :return: all date as string
+    """
+    return strftime("%Y-%m-%d %H:%M:%S", gmtime())
 
 
 def isDate(cadena):
@@ -138,3 +145,7 @@ def errorBreak(num,msg):
     """
     logging.error(msg)
     exit(num)
+
+
+#logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
+logging.basicConfig(format='[%(levelname)s]['+getTime()+']: %(message)s')
