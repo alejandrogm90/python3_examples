@@ -17,11 +17,11 @@
 #       along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
-import logging
 import sqlite3
 import pyfiglet
 from calendar import monthrange
 from time import gmtime, strftime  
+
 
 def getTime():
     """ Return a complete date as YYYY-MM-dd HH:mm
@@ -138,14 +138,10 @@ def getFiletName(location,extension=False):
     return name2
 
 
-def errorBreak(num,msg):
+def errorBreak(logger,num,msg):
     """ Show a menssage text and exits with output number
     :param num: output number
     :param msg: output menssage
     """
-    logging.error(msg)
+    logger.critical(msg)
     exit(num)
-
-
-#logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
-logging.basicConfig(format='[%(levelname)s]['+getTime()+']: %(message)s')

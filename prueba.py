@@ -16,11 +16,16 @@
 #       You should have received a copy of the GNU General Public License
 #       along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import logging
+import logging.config
 import datetime
 import random
 import commonFunctions as cf
 import sys
 
+# GLOBALS
+logging.config.fileConfig('logging.conf')
+LOGGER = logging.getLogger('testLogger')
 today = datetime.date.today()
 
 # Add Banner
@@ -30,10 +35,10 @@ textList.append('La fecha actual en formato datetime : '+str(datetime.datetime.n
 textList.append('La fecha actual en formato ctime : '+today.ctime())
 cf.printBanner(".", textList)
 
-cf.errorBreak(1,"ERROR a drede")
-
 w = list()
 for i in range(100):
     w.append(random.uniform(0,1))
 
 print(w)
+
+cf.errorBreak(LOGGER,1,"ERROR a drede")
