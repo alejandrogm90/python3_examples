@@ -34,7 +34,7 @@ cf.printMegaBanner("PORT SCANNER")
 textList = list()
 textList.append("Scanning Target: " + target)
 textList.append("Scanning started at:" + str(datetime.now()))
-cf.printBanner("-", 50, textList)
+cf.printBanner(".", textList)
 
 try:
     # will scan ports between 1 to 65,535

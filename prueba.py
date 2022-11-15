@@ -19,18 +19,19 @@
 import datetime
 import random
 import commonFunctions as cf
+import sys
 
 today = datetime.date.today()
 
 # Add Banner
-cf.printMegaBanner("Prueba")
+cf.printMegaBanner(cf.getFiletName(sys.argv[0],True))
 textList = list()
 textList.append('La fecha actual en formato datetime : '+str(datetime.datetime.now()))
 textList.append('La fecha actual en formato ctime : '+today.ctime())
-cf.printBanner("-", 50, textList)
+cf.printBanner(".", textList)
 
 w = list()
 for i in range(100):
     w.append(random.uniform(0,1))
 
-print(w)
+#print(w)
