@@ -24,7 +24,7 @@ import commonFunctions as cf
 import sys
 
 # GLOBALS
-logging.config.fileConfig('logging.conf')
+logging.config.fileConfig('~/bin/logging.conf')
 LOGGER = logging.getLogger('testLogger')
 today = datetime.date.today()
 
