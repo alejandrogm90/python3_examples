@@ -30,6 +30,10 @@ def getTime():
     return strftime("%Y-%m-%d %H:%M:%S", gmtime())
 
 
+def getHeadLine(level):
+    return "["+getTime()+"]["+level+"]"
+
+
 def isDate(cadena):
     """ Check is the text recived is a rigth date
     :param cadena: datatime text (YYYY-MM-DD)
@@ -50,14 +54,12 @@ def isDate(cadena):
 
     if mes > 12 or mes < 1:
         return False
-
-    if anno < mes or anno < dia:
+    elif anno < mes or anno < dia:
         return False
-
-    if dia > monthrange(anno, mes)[1] or dia < 1:
+    elif dia > monthrange(anno, mes)[1] or dia < 1:
         return False
-
-    return True
+    else:
+        return True
 
 
 def create_sqlitle3_connection(db_file):
@@ -137,11 +139,38 @@ def getFiletName(location,extension=False):
 
     return name2
 
+def printLogFile(outputFile, msg):
+    printLogFile_file = open(outputFile,'a')
+    printLogFile_file.write(msg+os.linesep)
+    printLogFile_file.close()
 
-def errorBreak(logger,num,msg):
+def infoMsg(logger, msg, outputFile=""):
+    """ Show a menssage text
+    :param msg: info menssage
+    :param outputFile: output file 
+    """
+    logger.info(": "+msg)
+    if outputFile != "":
+        printLogFile(outputFile,getHeadLine("INFO")+": "+msg)
+
+def warnMsg(logger, msg, outputFile=""):
+    """ Show a menssage text
+    :param msg: warning menssage
+    :param outputFile: output file 
+    """
+    logger.warning(": "+msg)
+    if outputFile != "":
+        printLogFile(outputFile,getHeadLine("WARNING")+": "+msg)
+
+
+def errorMsg(logger, num, msg, outputFile=""):
     """ Show a menssage text and exits with output number
     :param num: output number
-    :param msg: output menssage
+    :param msg: error menssage
+    :param outputFile: output file 
     """
-    logger.critical(msg)
+    logger.error("["+str(num)+"]:"+msg)
+    if outputFile != "":
+        printLogFile(outputFile,getHeadLine("ERROR")+"["+str(num)+"]:"+msg)
     exit(num)
+

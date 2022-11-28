@@ -20,12 +20,13 @@ import logging
 import logging.config
 import datetime
 import random
-import commonFunctions as cf
+import scripts.commonFunctions as cf
 import sys
 
 # GLOBALS
-logging.config.fileConfig('~/bin/logging.conf')
+logging.config.fileConfig('logging.conf')
 LOGGER = logging.getLogger('testLogger')
+LOG_FILE = cf.getFiletName(sys.argv[0])+".log"
 today = datetime.date.today()
 
 # Add Banner
@@ -35,10 +36,5 @@ textList.append('La fecha actual en formato datetime : '+str(datetime.datetime.n
 textList.append('La fecha actual en formato ctime : '+today.ctime())
 cf.printBanner(".", textList)
 
-w = list()
-for i in range(100):
-    w.append(random.uniform(0,1))
-
-print(w)
-
-cf.errorBreak(LOGGER,1,"ERROR a drede")
+cf.infoMsg(LOGGER,"Mensaje informativo")
+cf.errorMsg(LOGGER,0,"ERROR a drede")
