@@ -130,3 +130,5 @@ dmypy.json
 
 # OTHERS
 __init__.py
+
+.idea/

@@ -54,7 +54,7 @@ class Dominio():
         return False
 
     def agregarNombre(self, nombre):
-        if not existeElemento(nombre):
+        if not self.existeElemento(nombre):
             self.listaNombres.append(nombre)
 
     def __str__(self):
@@ -119,8 +119,10 @@ class Gestor():
 def devolverFicheroSerbidores():
     if platform.system() == "Windows":
         return FICHERO_SERBIDORES_WINDOWS
-    else:
+    elif platform.system() == "Linux":
         return FICHERO_SERBIDORES_LINUX
+    else:
+        cf.errorMsg(LOGGER, 3, "Plataforma no soportada")
 
 if __name__ == '__main__':
     if len(sys.argv) == 2:
