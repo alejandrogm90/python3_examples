@@ -16,23 +16,21 @@
 #       You should have received a copy of the GNU General Public License
 #       along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import logging
-import logging.config
-import commonFunctions as cf
 import sys
 import os
 import platform
+import logging
+import logging.config
+import scripts.common_functions as cf
+
 
 # GLOBALS
 logging.config.fileConfig('~/bin/logging.conf')
 LOGGER = logging.getLogger('testLogger')
-SALTO_LINEA="\n"
-FICHERO_SERBIDORES_LINUX="/etc/hosts"
-FICHERO_SERBIDORES_WINDOWS="/etc/hosts"
+SALTO_LINEA = "\n"
+FICHERO_SERBIDORES_LINUX = "/etc/hosts"
+FICHERO_SERBIDORES_WINDOWS = "/etc/hosts"
 
-# Add Banner
-cf.printMegaBanner(cf.getFiletName(sys.argv[0],True).split(".")[0])
-print("")
 
 class Dominio():
     def __init__(self, nombre, nombre2=""):
@@ -63,6 +61,7 @@ class Dominio():
             texto += self.nombre+" "+elemento+SALTO_LINEA
         return texto
 
+
 class Gestor():
     def __init__(self):
         self.listaDominios = []
@@ -81,16 +80,16 @@ class Gestor():
         return False
 
     def leerFichero(self, direccion):
-        f1 = open(direccion,"r")
+        f1 = open(direccion, "r")
         lineas = f1.readlines()
         f1.close()
         for linea in lineas:
-            linea2 = linea.replace(SALTO_LINEA,"")
+            linea2 = linea.replace(SALTO_LINEA, "")
             if len(linea2) > 0 and "#" == linea2[1]:
                 print(linea2)
             else:
                 self.cabecera.append(linea2)
-        
+
     def agregarDominio(self, dominio):
         existe = False
         for elemento in self.listaDominios:
@@ -116,6 +115,7 @@ class Gestor():
             texto += str(elemento)
         return texto
 
+
 def devolverFicheroSerbidores():
     if platform.system() == "Windows":
         return FICHERO_SERBIDORES_WINDOWS
@@ -124,11 +124,16 @@ def devolverFicheroSerbidores():
     else:
         cf.errorMsg(LOGGER, 3, "Plataforma no soportada")
 
+
 if __name__ == '__main__':
+    # Add Banner
+    cf.printMegaBanner(cf.getFiletName(sys.argv[0], True).split(".")[0])
+    print("")
+
     if len(sys.argv) == 2:
-        if not os.path.isfile(sys.argv[1]): 
-            cf.errorMsg(LOGGER, 2, "El parámetro introducido '"+
-            sys.argv[1]+"' no es un fichero.")
+        if not os.path.isfile(sys.argv[1]):
+            cf.errorMsg(LOGGER, 2, "El parámetro introducido '" +
+                        sys.argv[1]+"' no es un fichero.")
         else:
             # Origen
             gestor_1 = Gestor()
@@ -143,8 +148,8 @@ if __name__ == '__main__':
         # Origen
         gestor_1 = Gestor()
         gestor_1.leerFichero(devolverFicheroSerbidores())
-        dominio_1 = Dominio(sys.argv[1],sys.argv[2])
-        #print(dominio_1)
+        dominio_1 = Dominio(sys.argv[1], sys.argv[2])
+        # print(dominio_1)
         gestor_1.agregarDominio(dominio_1)
         print(gestor_1)
     else:

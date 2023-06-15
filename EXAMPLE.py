@@ -16,12 +16,13 @@
 #       You should have received a copy of the GNU General Public License
 #       along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import logging
-import logging.config
+import sys
 import datetime
 import random
-import scripts.commonFunctions as cf
-import sys
+import configparser
+import logging.config
+import scripts.common_functions as cf
+
 
 # GLOBALS
 logging.config.fileConfig('logging.conf')
@@ -29,12 +30,36 @@ LOGGER = logging.getLogger('testLogger')
 LOG_FILE = cf.getFiletName(sys.argv[0])+".log"
 today = datetime.date.today()
 
-# Add Banner
-cf.printMegaBanner(cf.getFiletName(sys.argv[0],True))
-textList = list()
-textList.append('La fecha actual en formato datetime : '+str(datetime.datetime.now()))
-textList.append('La fecha actual en formato ctime : '+today.ctime())
-cf.printBanner(".", textList)
 
-cf.infoMsg(LOGGER,"Mensaje informativo")
-cf.errorMsg(LOGGER,0,"ERROR a drede")
+if __name__ == '__main__':
+    # Add Banner
+    cf.printMegaBanner(cf.getFiletName(sys.argv[0], True))
+    # Show script info
+    info = {
+            "name": str(cf.getFiletName(sys.argv[0], True)),
+            "location": sys.argv[0],
+            "description": "A simple script to print info",
+            "Autor": "Alejandro Gómez",
+            "calling": sys.argv[0] + " 2023-05-07 BTC ABC USD"
+        }
+    cf.showScriptInfo(info)
+
+    config = configparser.ConfigParser()
+    config.read_file(open("logging.conf", "r"))
+    SECTION_NAME_1 = 'loggers'
+    KEY_1 = 'keys'
+    VALUE_1 = config.get(SECTION_NAME_1, KEY_1)
+    print("\nSECTION_NAME: {0} | KEY: {1} | VALUE: {2}\n".format(SECTION_NAME_1, KEY_1, VALUE_1))
+
+    textList = list()
+    textList.append('La fecha actual en formato datetime : '+str(datetime.datetime.now()))
+    textList.append('La fecha actual en formato ctime : '+today.ctime())
+    cf.printBanner(".", textList)
+
+    w = list()
+    for i in range(4):
+        w.append(random.uniform(0, 1))
+    print(w)
+
+    cf.infoMsg(LOGGER,"Mensaje informativo")
+    cf.errorMsg(LOGGER,0,"ERROR a drede")

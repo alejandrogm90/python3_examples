@@ -20,7 +20,7 @@
 import sys
 from email.mime.text import MIMEText
 from smtplib import SMTP
- 
+
 if __name__ == "__main__" and len(sys.argv) == 2:
     correo = "FROM MAIL"
     destinatario = "TO MAIL"
@@ -32,11 +32,11 @@ if __name__ == "__main__" and len(sys.argv) == 2:
     except:
         print("Error al leer el fichero")
         exit(1)
-    
+
     mime_mensaje = MIMEText(mensaje)
     mime_mensaje["From"] = correo[0]
     mime_mensaje["To"] = destinatario
-    mime_mensaje["Content-type"] = "text/html" 
+    mime_mensaje["Content-type"] = "text/html"
     mime_mensaje["Subject"] = "INFO"
 
     server = SMTP(correo[2], int(correo[3]))
