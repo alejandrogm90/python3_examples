@@ -21,10 +21,8 @@ import time
 import serial
 
 # Settings for reading from Arduino Serial
-serialPort = "/dev/ttyACM0"  # Change it to your Serial Port, Check in Arudino IDE
-baudRate = 115200
-ser = serial.Serial(serialPort, baudRate, timeout=0.5)
-time.sleep(2)
+SERIAL_PORT = "/dev/ttyACM0"
+BAUD_RATE = 115200
 
 
 def getCPUtemperature():
@@ -72,44 +70,44 @@ def getDiskSpace():
 
 
 if __name__ == '__main__':
-    try:
-        while True:
-            # CPU informatiom
-            CPU_temp = getCPUtemperature()
-            CPU_usage = getCPUuse()
+    if not os.path.exists(SERIAL_PORT):
+        print("Arduino is not conected")
+    else:
+        ser = serial.Serial(SERIAL_PORT, BAUD_RATE, timeout=0.5)
+        time.sleep(2)
 
-            # RAM information
-            # Output is in kb, here I convert it in Mb for readability
-            RAM_stats = getRAMinfo()
-            RAM_total = str(round(int(RAM_stats[0]) / 1000, 1))
-            RAM_used = str(round(int(RAM_stats[1]) / 1000, 1))
-            RAM_free = str(round(int(RAM_stats[2]) / 1000, 1))
+        # CPU informatiom
+        CPU_temp = getCPUtemperature()
+        CPU_usage = getCPUuse()
 
-            # Disk information
-            DISK_stats = getDiskSpace()
-            DISK_total = DISK_stats[0]
-            DISK_used = DISK_stats[1]
-            DISK_perc = DISK_stats[3]
+        # RAM information - Output is in kb, here I convert it in Mb for readability
+        RAM_stats = getRAMinfo()
+        RAM_total = str(round(int(RAM_stats[0]) / 1000, 1))
+        RAM_used = str(round(int(RAM_stats[1]) / 1000, 1))
+        RAM_free = str(round(int(RAM_stats[2]) / 1000, 1))
 
-            temp = ser.write(str.encode(CPU_temp+' '+CPU_usage))
+        # Disk information
+        DISK_stats = getDiskSpace()
+        DISK_total = DISK_stats[0]
+        DISK_used = DISK_stats[1]
+        DISK_perc = DISK_stats[3]
 
-            data = ser.write(str.encode(CPU_temp+':'+CPU_usage+':'+RAM_total+':' +
-                            RAM_used+':'+RAM_free+':'+DISK_total+':'+DISK_used+':'+DISK_perc))
-            ser.flush()
-            time.sleep(2)
+        temp = ser.write(str.encode(CPU_temp+' '+CPU_usage))
 
-            print('')
-            print('CPU Temperature = '+CPU_temp)
-            print('CPU Use = '+CPU_usage)
-            print('')
-            print('RAM Total = '+str(RAM_total)+' MB')
-            print('RAM Used = '+str(RAM_used)+' MB')
-            print('RAM Free = '+str(RAM_free)+' MB')
-            print('')
-            print('DISK Total Space = '+str(DISK_total)+'B')
-            print('DISK Used Space = '+str(DISK_used)+'B')
-            print('DISK Used Percentage = '+str(DISK_perc))
+        data = ser.write(str.encode(CPU_temp+':'+CPU_usage+':'+RAM_total+':' +
+                        RAM_used+':'+RAM_free+':'+DISK_total+':'+DISK_used+':'+DISK_perc))
+        ser.flush()
+        time.sleep(2)
 
-    except KeyboardInterrupt:
-        if ser != None:
-            ser.close()
+        print('')
+        print('CPU Temperature = '+CPU_temp)
+        print('CPU Use = '+CPU_usage)
+        print('')
+        print('RAM Total = '+str(RAM_total)+' MB')
+        print('RAM Used = '+str(RAM_used)+' MB')
+        print('RAM Free = '+str(RAM_free)+' MB')
+        print('')
+        print('DISK Total Space = '+str(DISK_total)+'B')
+        print('DISK Used Space = '+str(DISK_used)+'B')
+        print('DISK Used Percentage = '+str(DISK_perc))
+        ser.close()
