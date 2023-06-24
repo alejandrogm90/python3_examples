@@ -7,13 +7,12 @@
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
 # Welcome to python3_examples
-Simple examples of python3
+Simple examples of python 3
 
 ## Installation
-A little intro about the installation. 
+A little intro about the installation:
 ```shell
-$ git clone https://example.com
-$ pip3 install -p requirements
+$ pip3 install -p requirements.txt
 ```
 
 ## Bibliography ##
