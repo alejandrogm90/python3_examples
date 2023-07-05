@@ -19,7 +19,7 @@
 import sys
 import socket
 import logging.config
-import scripts.common_functions as cf
+import src.common_functions as cf
 from datetime import datetime
 
 

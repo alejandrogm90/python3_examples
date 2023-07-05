@@ -70,7 +70,7 @@ def getFatherPath(path):
 
 def getProjetPath():
     """ Returns the project absolute path
-    PROJECT/src/scripts/cf.sh
+    PROJECT/src/src/cf.sh
     :return: path as string
     """
     if PROJECT_PATH != "":

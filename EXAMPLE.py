@@ -21,7 +21,7 @@ import datetime
 import random
 import configparser
 import logging.config
-import scripts.common_functions as cf
+import src.common_functions as cf
 
 
 # GLOBALS

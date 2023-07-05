@@ -21,7 +21,7 @@ import os
 import platform
 import logging
 import logging.config
-import scripts.common_functions as cf
+import src.common_functions as cf
 
 
 # GLOBALS
