@@ -16,32 +16,28 @@
 #       You should have received a copy of the GNU General Public License
 #       along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import sys
+import configparser
 import datetime
 import random
-import configparser
-import logging.config
+import sys
+
 import src.common_functions as cf
 
-
 # GLOBALS
-logging.config.fileConfig('logging.conf')
-LOGGER = logging.getLogger('testLogger')
-LOG_FILE = cf.getFiletName(sys.argv[0])+".log"
+LOG_FILE = cf.get_file_name(sys.argv[0]) + ".log"
 today = datetime.date.today()
-
 
 if __name__ == '__main__':
     # Add Banner
-    cf.printMegaBanner(cf.getFiletName(sys.argv[0], True))
+    cf.print_mega_banner(cf.get_file_name(sys.argv[0], True))
     # Show script info
     info = {
-            "name": str(cf.getFiletName(sys.argv[0], True)),
-            "location": sys.argv[0],
-            "description": "A simple script to print info",
-            "Autor": "Alejandro Gómez",
-            "calling": sys.argv[0] + " 2023-05-07 BTC ABC USD"
-        }
+        "name": str(cf.get_file_name(sys.argv[0], True)),
+        "location": sys.argv[0],
+        "description": "A simple script to print info",
+        "Autor": "Alejandro Gómez",
+        "calling": sys.argv[0] + " 2023-05-07 BTC ABC USD"
+    }
     cf.showScriptInfo(info)
 
     config = configparser.ConfigParser()
@@ -52,14 +48,14 @@ if __name__ == '__main__':
     print("\nSECTION_NAME: {0} | KEY: {1} | VALUE: {2}\n".format(SECTION_NAME_1, KEY_1, VALUE_1))
 
     textList = list()
-    textList.append('La fecha actual en formato datetime : '+str(datetime.datetime.now()))
-    textList.append('La fecha actual en formato ctime : '+today.ctime())
-    cf.printBanner(".", textList)
+    textList.append('La fecha actual en formato datetime : ' + str(datetime.datetime.now()))
+    textList.append('La fecha actual en formato ctime : ' + today.ctime())
+    cf.print_banner(".", textList)
 
     w = list()
     for i in range(4):
         w.append(random.uniform(0, 1))
     print(w)
 
-    cf.infoMsg(LOGGER,"Mensaje informativo")
-    cf.errorMsg(LOGGER,0,"ERROR a drede")
+    cf.info_msg("Mensaje informativo")
+    cf.error_msg(0, "ERROR a drede")

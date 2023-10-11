@@ -16,46 +16,42 @@
 #       You should have received a copy of the GNU General Public License
 #       along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from tkinter import *
+import tkinter as tk
 
 
 def frame(root, side):
-    w = Frame(root)
-    w.pack(side=side, expand=YES, fill=BOTH)
+    w = tk.Frame(root)
+    w.pack(side=side, expand=tk.YES, fill=tk.BOTH)
     return w
 
 
 def button(root, side, text, command=None):
-    w = Button(root, text=text, command=command)
-    w.pack(side=side, expand=YES, fill=BOTH)
+    w = tk.Button(root, text=text, command=command)
+    w.pack(side=side, expand=tk.YES, fill=tk.BOTH)
     return w
 
 
-class Calculator(Frame):
+class Calculator(tk.Frame):
     def __init__(self):
-        Frame.__init__(self)
-        self.pack(expand=YES, fill=BOTH)
+        tk.Frame.__init__(self)
+        self.pack(expand=tk.YES, fill=tk.BOTH)
         self.master.title('Calculadora')
         self.master.iconname("cal1")
-        display = StringVar()
-        Entry(self, relief=SUNKEN, textvariable=display).pack(
-            side=TOP, expand=YES, fill=BOTH)
+        display = tk.StringVar()
+        tk.Entry(self, relief=tk.SUNKEN, textvariable=display).pack(side=tk.TOP, expand=tk.YES, fill=tk.BOTH)
         for key in ("123", "456", "789", "0."):
-            keyF = frame(self, TOP)
+            keyF = frame(self, tk.TOP)
             for char in key:
-                button(keyF, LEFT, char, lambda w=display,
-                       s=' %s ' % char: w.set(w.get()+s))
-        opsF = frame(self, TOP)
+                button(keyF, tk.LEFT, char, lambda w=display, s=' %s ' % char: w.set(w.get() + s))
+        opsF = frame(self, tk.TOP)
         for char in "+-*/=":
             if char == '=':
-                btn = button(opsF, LEFT, char)
-                btn.bind('<ButtonRelease-1>', lambda e,
-                         s=self, w=display: s.calc(w), '+')
+                btn = button(opsF, tk.LEFT, char)
+                btn.bind('<ButtonRelease-1>', lambda e, s=self, w=display: s.calc(w), '+')
             else:
-                btn = button(opsF, LEFT, char,
-                             lambda w=display, c=char: w.set(w.get()+' '+c+' '))
-        clearF = frame(self, BOTTOM)
-        button(clearF, LEFT, 'Clr', lambda w=display: w.set(''))
+                btn = button(opsF, tk.LEFT, char, lambda w=display, c=char: w.set(w.get() + ' ' + c + ' '))
+        clearF = frame(self, tk.BOTTOM)
+        button(clearF, tk.LEFT, 'Clr', lambda w=display: w.set(''))
 
     def calc(self, display):
         try:

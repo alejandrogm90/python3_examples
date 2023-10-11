@@ -16,8 +16,8 @@
 #       You should have received a copy of the GNU General Public License
 #       along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from asyncio.windows_events import NULL
 import sys
+from asyncio.windows_events import NULL
 
 DELIMITER = '='
 
@@ -55,7 +55,7 @@ class propertiesFile():
         if line[0] != ' ' and "=" in line:
             partes = line.split("=")
             # if partes[0] != "":
-            print("---- PARTES:  "+partes[1])
+            print("---- PARTES:  " + partes[1])
             if partes[0] != "":
                 return partes
         return NULL
@@ -71,10 +71,10 @@ class propertiesFile():
         numPropiNoExisten = 0
         for propiedadActual in self.propiedades:
             if not fichero.existePropiedad(propiedadActual[0]):
-                print("[WARN] No existe: "+propiedadActual[0])
+                print("[WARN] No existe: " + propiedadActual[0])
                 numPropiNoExisten = numPropiNoExisten + 1
         if numPropiNoExisten > 0:
-            print("[ERROR] Faltan "+str(numPropiNoExisten)+" propiedades")
+            print("[ERROR] Faltan " + str(numPropiNoExisten) + " propiedades")
         else:
             print("[MSG] Contiene todas las propiedades")
 
@@ -87,10 +87,10 @@ class propertiesFile():
                     exitste = "si"
                     break
             if exitste == "":
-                print("[WARN] No existe: "+propiedadActual[0])
+                print("[WARN] No existe: " + propiedadActual[0])
                 numPropiNoExisten = numPropiNoExisten + 1
         if numPropiNoExisten > 0:
-            print("[ERROR] Faltan "+str(numPropiNoExisten)+" propiedades")
+            print("[ERROR] Faltan " + str(numPropiNoExisten) + " propiedades")
         else:
             print("[MSG] Contiene todas las propiedades")
 
@@ -103,5 +103,5 @@ if __name__ == '__main__':
     SECOND_FILE = propertiesFile(sys.argv[2])
 
     FIRST_FILE.contiene(SECOND_FILE)
-    print(str(FIRST_FILE.getNumPropiedades())+" - "+str(SECOND_FILE.getNumPropiedades()) +
-          " = " + str(FIRST_FILE.getNumPropiedades() - SECOND_FILE.getNumPropiedades()))
+    print(str(FIRST_FILE.getNumPropiedades()) + " - " + str(SECOND_FILE.getNumPropiedades()) + " = " + str(
+        FIRST_FILE.getNumPropiedades() - SECOND_FILE.getNumPropiedades()))

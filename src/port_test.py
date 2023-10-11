@@ -16,17 +16,11 @@
 #       You should have received a copy of the GNU General Public License
 #       along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import sys
 import socket
-import logging.config
-import src.common_functions as cf
+import sys
 from datetime import datetime
 
-
-# GLOBALS
-logging.config.fileConfig('logging.conf')
-LOGGER = logging.getLogger('testLogger')
-
+import src.common_functions as cf
 
 if __name__ == '__main__':
     target = ""
@@ -34,15 +28,15 @@ if __name__ == '__main__':
         # translate hostname to IPv4
         target = socket.gethostbyname(sys.argv[1])
     else:
-        cf.infoMsg(LOGGER, sys.argv[0]+" [HOST_NAME]")
-        cf.errorMsg(LOGGER, 1, "Erroneous parameter number.")
+        cf.info_msg(sys.argv[0] + " [HOST_NAME]")
+        cf.error_msg(1, "Erroneous parameter number.")
 
     # Add Banner
-    cf.printMegaBanner("PORT SCANNER")
+    cf.print_mega_banner("PORT SCANNER")
     textList = list()
     textList.append("Scanning Target: " + target)
     textList.append("Scanning started at:" + str(datetime.now()))
-    cf.printBanner(".", textList)
+    cf.print_banner(".", textList)
 
     try:
         # will scan ports between 1 to 65,535

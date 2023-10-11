@@ -20,31 +20,35 @@
 import sys
 from email.mime.text import MIMEText
 from smtplib import SMTP
+import common_functions as cf
 
-if __name__ == "__main__" and len(sys.argv) == 2:
-    correo = "FROM MAIL"
-    destinatario = "TO MAIL"
-    print(correo)
-    try:
-        fo = open(sys.argv[1], "r+")
-        mensaje = fo.read()
-        fo.close()
-    except:
-        print("Error al leer el fichero")
-        exit(1)
 
-    mime_mensaje = MIMEText(mensaje)
-    mime_mensaje["From"] = correo[0]
-    mime_mensaje["To"] = destinatario
-    mime_mensaje["Content-type"] = "text/html"
-    mime_mensaje["Subject"] = "INFO"
+def send_mail(file: str, sender: str, sender_pass: str, destiny: str, server_name: str, server_port: int):
+    mime_message = MIMEText(file)
+    mime_message["From"] = sender
+    mime_message["To"] = destiny
+    mime_message["Content-type"] = "text/html"
+    mime_message["Subject"] = "INFO"
 
-    server = SMTP(correo[2], int(correo[3]))
+    server = SMTP(server_name, server_port)
     server.ehlo()
     server.starttls()
     server.ehlo()
-    server.login(correo[0], correo[1])
-    server.sendmail(correo[0], destinatario, mime_mensaje.as_string())
+    server.login(sender, sender_pass)
+    server.sendmail(sender, destiny, mime_message.as_string())
     server.quit()
-else:
-    print("Faltan parámetros")
+
+
+if __name__ == "__main__":
+    if len(sys.argv) == 7:
+        try:
+            fo = open(sys.argv[1], "r+")
+            message_text = fo.read()
+            fo.close()
+
+            send_mail(message_text, sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], int(sys.argv[6]))
+        except:
+            cf.error_msg(2, "Error reading file")
+    else:
+        cf.info_msg("file_path: str, sender_email: str, sender_pass: str, destiny_email: str, server: str, port: int")
+        cf.error_msg(1, "Wrong parameters")

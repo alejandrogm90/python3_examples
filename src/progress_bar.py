@@ -20,13 +20,13 @@ import time
 
 REFRES_TIME = 0.2
 BAR_LEN = 24
-elements = ['-','\\','|','/']
+elements = ['-', '\\', '|', '/']
 
-for i in range(BAR_LEN+1):
+for i in range(BAR_LEN + 1):
     frame = i % len(elements)
     # print(f'\r[{elements[frame]*i}]', end="")
     #  Normal
-    print(f'\r[{elements[frame]*i:=<{BAR_LEN}}]', end="")
+    print(f'\r[{elements[frame] * i:=<{BAR_LEN}}]', end="")
     # Desde atrás
     # print(f'\r[{elements[frame]*i:=>{BAR_LEN}}]', end="")
     # Desde el centro

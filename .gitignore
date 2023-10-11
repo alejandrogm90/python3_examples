@@ -131,4 +131,6 @@ dmypy.json
 # OTHERS
 __init__.py
 
+# IDEs
 .idea/
+.vscode/

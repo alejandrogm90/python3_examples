@@ -16,8 +16,9 @@
 #       You should have received a copy of the GNU General Public License
 #       along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import sys
 import hashlib
+import sys
+
 
 def enMD5(cad1):
     token = hashlib.md5()
@@ -25,15 +26,17 @@ def enMD5(cad1):
     pass1 = token.hexdigest()
     return pass1
 
+
 def enSHA1(cad1):
     token = hashlib.sha1()
     token.update(cad1.encode('utf-8'))
     pass1 = token.hexdigest()
     return pass1
 
+
 if __name__ == '__main__':
     if len(sys.argv) > 1:
-        print("En MD5: "+enMD5(sys.argv[1]))
-        print("En SHA1: "+enSHA1(sys.argv[1]))
+        print("En MD5: " + enMD5(sys.argv[1]))
+        print("En SHA1: " + enSHA1(sys.argv[1]))
     else:
         print("A parameter is required")

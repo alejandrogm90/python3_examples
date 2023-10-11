@@ -17,12 +17,12 @@
 #       along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
-import time
+
 
 def getCPUtemperature():
     """ Return CPU temperature as a character string """
     res = os.popen('vcgencmd measure_temp').readline()
-    return(res.replace("temp=", "").replace("'C\n", ""))
+    return (res.replace("temp=", "").replace("'C\n", ""))
 
 
 def getRAMinfo():
@@ -38,12 +38,12 @@ def getRAMinfo():
         i = i + 1
         line = p.readline()
         if i == 2:
-            return(line.split()[1:4])
+            return (line.split()[1:4])
 
 
 def getCPUuse():
     """ Return % of CPU used by user as a character string """
-    return(str(os.popen("top -n1 | awk '/Cpu\(s\):/ {print $2}'").readline().strip()))
+    return (str(os.popen("top -n1 | awk '/Cpu\(s\):/ {print $2}'").readline().strip()))
 
 
 def getDiskSpace():
@@ -60,7 +60,7 @@ def getDiskSpace():
         i = i + 1
         line = p.readline()
         if i == 2:
-            return(line.split()[1:5])
+            return (line.split()[1:5])
 
 
 if __name__ == '__main__':
@@ -82,14 +82,13 @@ if __name__ == '__main__':
     DISK_perc = DISK_stats[3]
 
     print('')
-    print('CPU Temperature = '+CPU_temp)
-    print('CPU Use = '+CPU_usage)
+    print('CPU Temperature = ' + CPU_temp)
+    print('CPU Use = ' + CPU_usage)
     print('')
-    print('RAM Total = '+str(RAM_total)+' MB')
-    print('RAM Used = '+str(RAM_used)+' MB')
-    print('RAM Free = '+str(RAM_free)+' MB')
+    print('RAM Total = ' + str(RAM_total) + ' MB')
+    print('RAM Used = ' + str(RAM_used) + ' MB')
+    print('RAM Free = ' + str(RAM_free) + ' MB')
     print('')
-    print('DISK Total Space = '+str(DISK_total)+'B')
-    print('DISK Used Space = '+str(DISK_used)+'B')
-    print('DISK Used Percentage = '+str(DISK_perc))
-
+    print('DISK Total Space = ' + str(DISK_total) + 'B')
+    print('DISK Used Space = ' + str(DISK_used) + 'B')
+    print('DISK Used Percentage = ' + str(DISK_perc))

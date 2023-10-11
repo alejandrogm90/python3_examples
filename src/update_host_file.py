@@ -16,17 +16,13 @@
 #       You should have received a copy of the GNU General Public License
 #       along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import sys
 import os
 import platform
-import logging
-import logging.config
+import sys
+
 import src.common_functions as cf
 
-
 # GLOBALS
-logging.config.fileConfig('~/bin/logging.conf')
-LOGGER = logging.getLogger('testLogger')
 SALTO_LINEA = "\n"
 FICHERO_SERBIDORES_LINUX = "/etc/hosts"
 FICHERO_SERBIDORES_WINDOWS = "/etc/hosts"
@@ -58,7 +54,7 @@ class Dominio():
     def __str__(self):
         texto = ""
         for elemento in self.listaNombres:
-            texto += self.nombre+" "+elemento+SALTO_LINEA
+            texto += self.nombre + " " + elemento + SALTO_LINEA
         return texto
 
 
@@ -110,7 +106,7 @@ class Gestor():
     def __str__(self):
         texto = ""
         for elemento in self.cabecera:
-            texto += elemento+SALTO_LINEA
+            texto += elemento + SALTO_LINEA
         for elemento in self.listaDominios:
             texto += str(elemento)
         return texto
@@ -122,18 +118,17 @@ def devolverFicheroSerbidores():
     elif platform.system() == "Linux":
         return FICHERO_SERBIDORES_LINUX
     else:
-        cf.errorMsg(LOGGER, 3, "Plataforma no soportada")
+        cf.error_msg(3, "Plataforma no soportada")
 
 
 if __name__ == '__main__':
     # Add Banner
-    cf.printMegaBanner(cf.getFiletName(sys.argv[0], True).split(".")[0])
+    cf.print_mega_banner(cf.get_file_name(sys.argv[0], True).split(".")[0])
     print("")
 
     if len(sys.argv) == 2:
         if not os.path.isfile(sys.argv[1]):
-            cf.errorMsg(LOGGER, 2, "El parámetro introducido '" +
-                        sys.argv[1]+"' no es un fichero.")
+            cf.error_msg(2, "El parámetro introducido '" + sys.argv[1] + "' no es un fichero.")
         else:
             # Origen
             gestor_1 = Gestor()
@@ -153,4 +148,4 @@ if __name__ == '__main__':
         gestor_1.agregarDominio(dominio_1)
         print(gestor_1)
     else:
-        cf.errorMsg(LOGGER, 1, "Número de parámetros erróneos")
+        cf.error_msg(1, "Número de parámetros erróneos")

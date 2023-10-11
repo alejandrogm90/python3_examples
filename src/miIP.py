@@ -16,8 +16,8 @@
 #       You should have received a copy of the GNU General Public License
 #       along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import sys
 import socket
+import sys
 import urllib.request
 
 
@@ -50,9 +50,9 @@ if __name__ == '__main__':
             print(IP_global())
         else:
             print("ERROR:")
-            print(sys.argv[0]+" -l or --local #LOCAL IP")
-            print(sys.argv[0]+" -g or --global #GLOBAL IP")
-            print(sys.argv[0]+" #GLOBAL IP")
+            print(sys.argv[0] + " -l or --local #LOCAL IP")
+            print(sys.argv[0] + " -g or --global #GLOBAL IP")
+            print(sys.argv[0] + " #GLOBAL IP")
     else:
-        print('Local_IP:'+IP_local())
-        print('Global_IP:'+IP_global())
+        print('Local_IP:' + IP_local())
+        print('Global_IP:' + IP_global())
