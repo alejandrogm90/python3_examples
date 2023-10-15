@@ -132,7 +132,7 @@ def get_date() -> str:
     return strftime("%Y-%m-%d", gmtime())
 
 
-def get_head_line(level: str):
+def get_head_line(level: str) -> str:
     """ Returns log format headline
     :return: string log format
     """
@@ -163,7 +163,6 @@ def is_valid_date(cadena: str) -> bool:
         return False
     elif dia > monthrange(anno, mes)[1] or dia < 1:
         return False
-
     return True
 
 
@@ -185,13 +184,6 @@ def print_banner(characters: str, text_list: list) -> None:
             spaces = " " * (line_size - len(line) + 1)
             print(characters + " " + line + spaces + characters)
     print(characters * (line_size + 4))
-
-
-def print_mega_banner(text: str) -> None:
-    """ Print a big banner
-    :param text: text to print
-    """
-    print(pyfiglet.figlet_format(text))
 
 
 def print_file_encoded(name: str) -> None:
@@ -226,7 +218,6 @@ def get_file_name(location: str, extension=False) -> str:
         else:
             for part2 in range(0, (parts - 1)):
                 name2 += name1.split(spliter_point)[part2]
-
     return name2
 
 
@@ -235,7 +226,7 @@ def get_file_log(location: str) -> str:
     :param location: URI of scritp
     :return: file log name
     """
-    return get_file_name(location) + "_" + get_date() + ".log"
+    return "{0}_{1}.log".format(get_file_name(location), get_date())
 
 
 def print_log_in_file(output_file: str, msg: str) -> None:
@@ -246,10 +237,17 @@ def print_log_in_file(output_file: str, msg: str) -> None:
         log_file.write(msg + os.linesep)
         log_file.close()
     except:
-        print("Error writing in file: " + str(output_file))
+        print("Error writing in file: {0}".format(output_file))
 
 
-def showScriptInfo(info) -> None:
+def print_mega_banner(text: str) -> None:
+    """ Print a big banner
+    :param text: text to print
+    """
+    print(pyfiglet.figlet_format(text))
+
+
+def show_script_info(info: {}) -> None:
     """ Show a basic info
     :param info: array with all info
     """

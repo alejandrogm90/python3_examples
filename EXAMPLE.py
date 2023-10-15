@@ -38,7 +38,7 @@ if __name__ == '__main__':
         "Autor": "Alejandro Gómez",
         "calling": sys.argv[0] + " 2023-05-07 BTC ABC USD"
     }
-    cf.showScriptInfo(info)
+    cf.show_script_info(info)
 
     config = configparser.ConfigParser()
     config.read_file(open("logging.conf", "r"))
