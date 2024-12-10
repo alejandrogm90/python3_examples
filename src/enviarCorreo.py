@@ -20,6 +20,7 @@
 import sys
 from email.mime.text import MIMEText
 from smtplib import SMTP
+
 import common_functions as cf
 
 

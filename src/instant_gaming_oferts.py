@@ -16,10 +16,9 @@
 #       You should have received a copy of the GNU General Public License
 #       along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from urllib.request import urlopen
-from bs4 import BeautifulSoup
 import subprocess
 
+from bs4 import BeautifulSoup
 
 # Globals
 WEB = "https://www.instant-gaming.com/es/"
@@ -30,33 +29,32 @@ WEB3 = "https://www.wikipedia.org/"
 
 def oferts():
     """ Return your global IP """
-    #response = urlopen(WEB)
-    #bs = BeautifulSoup(response.read(), "html.parser")
-    #response.close()
+    # response = urlopen(WEB)
+    # bs = BeautifulSoup(response.read(), "html.parser")
+    # response.close()
 
     response = subprocess.check_output(["curl", WEB])
     bs = BeautifulSoup(response, "html.parser")
 
-    #for link in bs.find_all("a"):
+    # for link in bs.find_all("a"):
     #   print(link.get("href"))
 
-    #promotions = bs.find("promotions-home-block")
+    # promotions = bs.find("promotions-home-block")
 
-    #promotions = bs.find("promotions-home-block")
+    # promotions = bs.find("promotions-home-block")
     promotions = bs.find_all(class_='item force-badge')
 
-    #print(promotions)
+    # print(promotions)
 
     for link in promotions.find_all(class_="title"):
         print("###########################")
         print(link)  # print(link.get("href"))
 
-
-    #cad1 = str(WEB)
-    #cad1 = cad1.split('id="promotions-home-block"')[1]
-    #cad1 = cad1.split('h2')[1]
-    #cad1 = cad1.split(' ')[4].split('<')[0]
-    #return cad1
+    # cad1 = str(WEB)
+    # cad1 = cad1.split('id="promotions-home-block"')[1]
+    # cad1 = cad1.split('h2')[1]
+    # cad1 = cad1.split(' ')[4].split('<')[0]
+    # return cad1
 
     """ 
     import requests

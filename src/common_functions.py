@@ -22,16 +22,23 @@ import os
 from calendar import monthrange
 from time import gmtime, strftime
 
-import pyfiglet
-
 logging.basicConfig(format='[%(asctime)s][%(levelname)s]%(message)s', datefmt='%Y-%d-%m %H:%M:%S', level=logging.INFO)
 LOGGER = logging
 SEPARATOR_1 = "###############################################################################################"
 PROJECT_PATH = ""
 
 
+def get_head_line(level: str) -> str:
+    """ Returns log format headline
+
+    :return: string log format
+    """
+    return "[" + get_time() + "][" + level + "]"
+
+
 def info_msg(msg: str, output_file="") -> None:
     """ Show a menssage text
+
     :param msg: info menssage
     :param output_file: output file
     """
@@ -42,6 +49,7 @@ def info_msg(msg: str, output_file="") -> None:
 
 def warn_msg(msg: str, output_file="") -> None:
     """ Show a menssage text
+
     :param msg: warning menssage
     :param output_file: output file
     """
@@ -52,6 +60,7 @@ def warn_msg(msg: str, output_file="") -> None:
 
 def error_msg(number: int, msg: str, output_file="") -> None:
     """ Show a menssage text and exits with output number
+
     :param number: output number
     :param msg: error menssage
     :param output_file: output file
@@ -62,8 +71,9 @@ def error_msg(number: int, msg: str, output_file="") -> None:
     exit(number)
 
 
-def load_json(path: str) -> None:
+def load_json(path: str) -> dict:
     """ Load a json file
+
     :param path: full path
     :return: json data
     """
@@ -73,8 +83,9 @@ def load_json(path: str) -> None:
     return data
 
 
-def load_config(project_path: str, log_file="") -> None:
+def load_config(project_path: str, log_file="") -> dict:
     """ Load a json config file
+
     :param project_path: full path
     :param log_file: log file
     :return: json data
@@ -88,6 +99,7 @@ def load_config(project_path: str, log_file="") -> None:
 
 def save_json(path: str, data: str) -> None:
     """ Write a json file
+
     :param path: full path
     :param data: data to write
     """
@@ -101,6 +113,7 @@ def save_json(path: str, data: str) -> None:
 
 def get_father_path(path: str) -> str:
     """ Returns father absolute path
+
     :return: path as string
     """
     return os.path.dirname(os.path.dirname(path))
@@ -109,6 +122,7 @@ def get_father_path(path: str) -> str:
 def get_project_path() -> str:
     """ Returns the project absolute path
     PROJECT/src/src/cf.sh
+
     :return: path as string
     """
     if PROJECT_PATH != "":
@@ -120,6 +134,7 @@ def get_project_path() -> str:
 
 def get_time() -> str:
     """ Returns a complete date as YYYY-MM-dd HH:mm
+
     :return: all date as string
     """
     return strftime("%Y-%m-%d %H:%M:%S", gmtime())
@@ -127,16 +142,10 @@ def get_time() -> str:
 
 def get_date() -> str:
     """ Returns a complete date as YYYY-MM-dd
+
     :return: all date as string
     """
     return strftime("%Y-%m-%d", gmtime())
-
-
-def get_head_line(level: str) -> str:
-    """ Returns log format headline
-    :return: string log format
-    """
-    return "[" + get_time() + "][" + level + "]"
 
 
 def is_valid_date(cadena: str) -> bool:
@@ -230,7 +239,10 @@ def get_file_log(location: str) -> str:
 
 
 def print_log_in_file(output_file: str, msg: str) -> None:
-    """ Print log file
+    """ Print in log file
+
+    :param output_file: file to write data
+    :param msg: text to wirte
     """
     try:
         log_file = open(output_file, 'a')
@@ -238,13 +250,6 @@ def print_log_in_file(output_file: str, msg: str) -> None:
         log_file.close()
     except:
         print("Error writing in file: {0}".format(output_file))
-
-
-def print_mega_banner(text: str) -> None:
-    """ Print a big banner
-    :param text: text to print
-    """
-    print(pyfiglet.figlet_format(text))
 
 
 def show_script_info(info: {}) -> None:

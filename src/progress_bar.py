@@ -18,9 +18,10 @@
 
 import time
 
-REFRES_TIME = 0.2
+REFRES_TIME = 0.4
 BAR_LEN = 24
-elements = ['-', '\\', '|', '/']
+# elements = ['-', '\\', '|', '/']
+elements = ['-', '*']
 
 for i in range(BAR_LEN + 1):
     frame = i % len(elements)

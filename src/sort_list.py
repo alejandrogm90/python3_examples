@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 #
-#       Copyright 2022 Alejandro Gomez
+#       Copyright 2024 Alejandro Gomez
 #
 #       This program is free software: you can redistribute it and/or modify
 #       it under the terms of the GNU General Public License as published by
@@ -16,27 +16,30 @@
 #       You should have received a copy of the GNU General Public License
 #       along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import hashlib
 import sys
 
-
-def example_md5(cad1: str):
-    token = hashlib.md5()
-    token.update(cad1.encode('utf-8'))
-    pass1 = token.hexdigest()
-    return pass1
-
-
-def example_sha1(cad1: str):
-    token = hashlib.sha1()
-    token.update(cad1.encode('utf-8'))
-    pass1 = token.hexdigest()
-    return pass1
-
-
 if __name__ == '__main__':
-    if len(sys.argv) > 1:
-        print("En MD5: " + example_md5(sys.argv[1]))
-        print("En SHA1: " + example_sha1(sys.argv[1]))
+    final_list = []
+
+    if not sys.stdin.isatty():
+        # use stdin if it's full
+        input_stream = sys.stdin
     else:
-        print("A parameter is required")
+        # otherwise, read the given file name
+        try:
+            input_file_name = sys.argv[1]
+        except IndexError:
+            raise IndexError('A file name is need as first parameter')
+        # Load file in input_stream
+        input_stream = open(input_file_name, 'r')
+
+    for line in input_stream:
+        c_line = str(line.split("\n")[0]).strip()
+        if c_line != "" and c_line not in final_list:
+            final_list.append(c_line)
+
+    # Sort data
+    final_list.sort()
+
+    for line in final_list:
+        print(line)

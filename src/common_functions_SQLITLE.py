@@ -20,23 +20,23 @@
 import sqlite3
 
 
-def create_sqlitle3_connection(db_file):
+def create_sqlitle3_connection(path: str):
     """ Create a database connection to the SQLite database specified by db_file
-    :param db_file: database file
+    :param path: path to database file
     :return: Connection object or None
     """
     conn = None
     try:
-        conn = sqlite3.connect(db_file)
+        conn = sqlite3.connect(path)
     except sqlite3.Error as e:
         print(e)
 
     return conn
 
 
-@staticmethod
-def get_values(path, sentence):
+def get_values(path: str, sentence: str):
     """ Returns values from SQLite database specified by     db_file
+    :param path: path to database file
     :param sentence: sentence
     :return: Connection object or None
     """
@@ -51,9 +51,9 @@ def get_values(path, sentence):
     return rows
 
 
-@staticmethod
-def execute(path, sentence):
+def execute(path: str, sentence: str):
     """ Execute a command in a SQLite database specified by db_file
+    :param path: path to database file
     :param sentence: sentence
     """
     conn = create_sqlitle3_connection(path)

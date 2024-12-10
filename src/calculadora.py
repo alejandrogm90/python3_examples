@@ -19,18 +19,6 @@
 import tkinter as tk
 
 
-def frame(root, side):
-    w = tk.Frame(root)
-    w.pack(side=side, expand=tk.YES, fill=tk.BOTH)
-    return w
-
-
-def button(root, side, text, command=None):
-    w = tk.Button(root, text=text, command=command)
-    w.pack(side=side, expand=tk.YES, fill=tk.BOTH)
-    return w
-
-
 class Calculator(tk.Frame):
     def __init__(self):
         tk.Frame.__init__(self)
@@ -40,20 +28,33 @@ class Calculator(tk.Frame):
         display = tk.StringVar()
         tk.Entry(self, relief=tk.SUNKEN, textvariable=display).pack(side=tk.TOP, expand=tk.YES, fill=tk.BOTH)
         for key in ("123", "456", "789", "0."):
-            keyF = frame(self, tk.TOP)
+            key_number = Calculator.frame(self, tk.TOP)
             for char in key:
-                button(keyF, tk.LEFT, char, lambda w=display, s=' %s ' % char: w.set(w.get() + s))
-        opsF = frame(self, tk.TOP)
+                Calculator.button(key_number, tk.LEFT, char, lambda w=display, s=' %s ' % char: w.set(w.get() + s))
+        ops_frame = Calculator.frame(self, tk.TOP)
         for char in "+-*/=":
             if char == '=':
-                btn = button(opsF, tk.LEFT, char)
+                btn = Calculator.button(ops_frame, tk.LEFT, char)
                 btn.bind('<ButtonRelease-1>', lambda e, s=self, w=display: s.calc(w), '+')
             else:
-                btn = button(opsF, tk.LEFT, char, lambda w=display, c=char: w.set(w.get() + ' ' + c + ' '))
-        clearF = frame(self, tk.BOTTOM)
-        button(clearF, tk.LEFT, 'Clr', lambda w=display: w.set(''))
+                btn = Calculator.button(ops_frame, tk.LEFT, char, lambda w=display, c=char: w.set(f'{w.get()} {c} '))
+        clear_frame = Calculator.frame(self, tk.BOTTOM)
+        Calculator.button(clear_frame, tk.LEFT, 'Clr', lambda w=display: w.set(''))
 
-    def calc(self, display):
+    @staticmethod
+    def frame(root, side):
+        w = tk.Frame(root)
+        w.pack(side=side, expand=tk.YES, fill=tk.BOTH)
+        return w
+
+    @staticmethod
+    def button(root, side, text, command=None):
+        w = tk.Button(root, text=text, command=command)
+        w.pack(side=side, expand=tk.YES, fill=tk.BOTH)
+        return w
+
+    @staticmethod
+    def calc(display):
         try:
             display.set(eval(display.get()))
         except ValueError:

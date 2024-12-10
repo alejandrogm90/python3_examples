@@ -27,7 +27,7 @@ class Criptosistema:
             m, n = n, m % n
         return m * self.signo(m)
 
-    def xeuclides(self, a, b):
+    def x_euclides(self, a, b):
         m, n = int(a), int(b)
         u0, u1 = 1, 0
         v0, v1 = 0, 1
@@ -39,7 +39,7 @@ class Criptosistema:
         sg = self.signo(m)
         return m * sg, u0 * sg, v0 * sg
 
-    def xeuclidesRed(self, a, b):
+    def x_euclides_red(self, a, b):
         """
         xeuclidesRed(a,b) proporciona (a,b) y s tales que
         a * s = (a,b) (mod b). Si (a,b) = 1, entonces s es 
@@ -54,24 +54,38 @@ class Criptosistema:
         sg = self.signo(m)
         return m * sg, u0 * sg
 
-    # Criptosistema Afín
-    def cifraAfinGen(self, alfabeto, a, b, m):
+    def cifra_afin_generador(self, alfabeto, a, b, m):
+        """
+        Criptosistema Afín
+
+        :param alfabeto: cadena con el alfabeto completo
+        :param a:
+        :param b:
+        :param m:
+        :return:
+        """
         codificado = [alfabeto[(a * alfabeto.index(i) + b) % len(alfabeto)] for i in m]
         return "".join(codificado)
 
-    def llaveDescifradoAfinGen(self, alfabeto, a, b):
-        def inversoMod(x, y):
-            return self.xeuclidesRed(self, x, y)[1]
+    def inversoMod(self, x, y):
+        return self.x_euclides_red(self, x, y)[1]
 
-        x = inversoMod(a, len(alfabeto))
+    def llaveDescifradoAfinGen(self, alfabeto, a, b):
+        x = self.inversoMod(a, len(alfabeto))
         return alfabeto, x, -x * b % len(alfabeto)
 
-    # Ataque Criptosistema Afin a fuerza bruta
-    def ataqueCAFuerzaBruta(self, alfabeto, cifra):
+    def ataque_fuerza_bruta(self, alfabeto: str, cifra: str) -> None:
+        """
+        Ataque a fuerza bruta
+
+        :param alfabeto: posible chars values given as string
+        :param cifra: cifra as string
+        :return: None
+        """
         file = open('resultados.txt', 'a')
-        for i in xrange(len(alfabeto)):
-            for j in xrange(len(alfabeto)):
-                descifrado = cifraAfinGen(alfabeto, i, j, cifra)
+        for i in range(len(alfabeto)):
+            for j in range(len(alfabeto)):
+                descifrado = self.cifraAfinGen(alfabeto, i, j, cifra)
                 file.write(str(i) + ',' + str(j) + '\n' + descifrado + '\n')
         file.close()
 
@@ -97,4 +111,4 @@ if __name__ == "__main__":
     # print(c1.cifraAfinGen(alfabeto,29,38,cifra))
     for num1 in range(0, len(cifra)):
         for num2 in range(0, len(alfabeto)):
-            print(str(num1) + '=' + str(num2) + " ---> " + c1.cifraAfinGen(alfabeto, num1, num2, cifra))
+            print(f'f{num1}={num2} ---> {c1.cifraAfinGen(alfabeto, num1, num2, cifra)}')

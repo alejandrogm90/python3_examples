@@ -21,7 +21,7 @@ import sys
 import urllib.request
 
 
-def IP_local():
+def local_ip():
     """ Return your local IP """
     respuesta = ""
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -31,7 +31,7 @@ def IP_local():
     return respuesta
 
 
-def IP_global():
+def global_ip():
     """ Return your global IP """
     response = urllib.request.urlopen('http://www.vermiip.es/')
     html = response.read()
@@ -45,14 +45,14 @@ def IP_global():
 if __name__ == '__main__':
     if len(sys.argv) >= 2:
         if sys.argv[1] == "-l" or sys.argv[1] == "--local":
-            print(IP_local())
+            print(f'Local_IP: {local_ip()}')
         elif sys.argv[1] == "-g" or sys.argv[1] == "--global":
-            print(IP_global())
+            print(f'Global_IP: {global_ip()}')
         else:
             print("ERROR:")
             print(sys.argv[0] + " -l or --local #LOCAL IP")
             print(sys.argv[0] + " -g or --global #GLOBAL IP")
             print(sys.argv[0] + " #GLOBAL IP")
     else:
-        print('Local_IP:' + IP_local())
-        print('Global_IP:' + IP_global())
+        print(f'Local_IP: {local_ip()}')
+        print(f'Global_IP: {global_ip()}')

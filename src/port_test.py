@@ -20,7 +20,7 @@ import socket
 import sys
 from datetime import datetime
 
-import src.common_functions as cf
+import common_functions as cf
 
 if __name__ == '__main__':
     target = ""

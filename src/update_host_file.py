@@ -20,7 +20,7 @@ import os
 import platform
 import sys
 
-import src.common_functions as cf
+import common_functions as cf
 
 # GLOBALS
 SALTO_LINEA = "\n"

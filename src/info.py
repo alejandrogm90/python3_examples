@@ -16,67 +16,22 @@
 #       You should have received a copy of the GNU General Public License
 #       along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import os
-
-
-def getCPUtemperature():
-    """ Return CPU temperature as a character string """
-    res = os.popen('vcgencmd measure_temp').readline()
-    return (res.replace("temp=", "").replace("'C\n", ""))
-
-
-def getRAMinfo():
-    """
-    Return RAM information (unit=kb) in a list
-    Index 0: total RAM
-    Index 1: used RAM
-    Index 2: free RAM 
-    """
-    p = os.popen('free')
-    i = 0
-    while 1:
-        i = i + 1
-        line = p.readline()
-        if i == 2:
-            return (line.split()[1:4])
-
-
-def getCPUuse():
-    """ Return % of CPU used by user as a character string """
-    return (str(os.popen("top -n1 | awk '/Cpu\(s\):/ {print $2}'").readline().strip()))
-
-
-def getDiskSpace():
-    """ 
-    Return information about disk space as a list (unit included)
-    Index 0: total disk space
-    Index 1: used disk space
-    Index 2: remaining disk space
-    Index 3: percentage of disk used
-    """
-    p = os.popen("df -h /")
-    i = 0
-    while 1:
-        i = i + 1
-        line = p.readline()
-        if i == 2:
-            return (line.split()[1:5])
-
+from src.extended_functions import get_cpu_temperature, get_cpu_use, get_ram_info, get_disk_space
 
 if __name__ == '__main__':
-    # CPU informatiom
-    CPU_temp = getCPUtemperature()
-    CPU_usage = getCPUuse()
+    # CPU information
+    CPU_temp = get_cpu_temperature()
+    CPU_usage = get_cpu_use()
 
     # RAM information
     # Output is in kb, here I convert it in Mb for readability
-    RAM_stats = getRAMinfo()
+    RAM_stats = get_ram_info()
     RAM_total = str(round(int(RAM_stats[0]) / 1000, 1))
     RAM_used = str(round(int(RAM_stats[1]) / 1000, 1))
     RAM_free = str(round(int(RAM_stats[2]) / 1000, 1))
 
     # Disk information
-    DISK_stats = getDiskSpace()
+    DISK_stats = get_disk_space()
     DISK_total = DISK_stats[0]
     DISK_used = DISK_stats[1]
     DISK_perc = DISK_stats[3]
