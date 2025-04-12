@@ -27,11 +27,20 @@ def exit_msg(exit_number: int, message: str) -> None:
 
 def get_df(file_path: str) -> pandas.DataFrame | None:
     extension = file_path.split(".")[-1]
-    if os.path.exists(file_path):
-        if extension == "csv":
-            return pandas.read_csv(file_path)
-        elif extension == "xlsx":
-            return pandas.read_excel(file_path)
+    try:
+        if os.path.exists(file_path):
+            if extension == "csv":
+                return pandas.read_csv(file_path)
+            elif extension == "xlsx":
+                return pandas.read_excel(file_path)
+    except FileNotFoundError:
+        print(f"Error: El ficheros {file_path} no existe")
+        sys.exit(1)
+    except pandas.errors.EmptyDataError:
+        print(f"Error: El fichero {file_path} está vacío")
+        sys.exit(1)
+    except pandas.errors.ParserError:
+        print(f"Error: Error al parsear el fichero {file_path}")
 
 def get_output_path(file_path: str) -> str:
     extension = file_path.split(".")[-1]
@@ -42,16 +51,25 @@ def get_output_path(file_path: str) -> str:
         return file_path.replace(".csv", new_extension)
 
 
-if __name__ == '__main__':
-    if len(sys.argv) != 3:
-        exit_msg(1, f"Arguments must be: {sys.argv[0]} [FILE_1] [FILE_2]")
+class DataFrameIncompatibleError(Exception):
+    pass
 
-    df_left = get_df(sys.argv[1])
-    df_right = get_df(sys.argv[2])
-    if df_left is None:
-        exit_msg(2, f"Not valid file: {sys.argv[1]}")
-    if df_left is None:
-        exit_msg(3, f"Not valid file: {sys.argv[2]}")
+def comprobar_compatibilidad(df_left, df_right):
+    # Comprobar que los DataFrames tienen las mismas columnas
+    if set(df_left.columns) != set(df_right.columns):
+        raise DataFrameIncompatibleError("Los DataFrames no tienen las mismas columnas")
+
+    # Comprobar que los DataFrames tienen el mismo tipo de datos en cada columna
+    for col in df_left.columns:
+        if df_left[col].dtype != df_right[col].dtype:
+            raise DataFrameIncompatibleError(f"La columna '{col}' tiene tipos de datos diferentes en los DataFrames")
+
+def calcular_valores(df_left: pandas.DataFrame, df_right: pandas.DataFrame) -> pandas.DataFrame | None:
+    try:
+        comprobar_compatibilidad(df_left, df_right)
+    except DataFrameIncompatibleError as e:
+        print(f"Error: {e}")
+        return None
 
     # Calcular los valores
     total_left = len(df_left)
@@ -71,7 +89,7 @@ if __name__ == '__main__':
     both = df_left.apply(tuple, 1).isin(df_right.apply(tuple, 1)).sum()
 
     # Crear un nuevo DataFrame con los valores calculados
-    df_result = pandas.DataFrame({
+    return pandas.DataFrame({
         "Total_left": [total_left],
         "Total_right": [total_right],
         "Uniques_left": [uniques_left],
@@ -83,5 +101,17 @@ if __name__ == '__main__':
         "Both": [both]
     })
 
-    # Guardar el nuevo DataFrame en un archivo CSV
-    df_result.to_csv(get_output_path(sys.argv[1]), index=False)
+
+if __name__ == '__main__':
+    if len(sys.argv) != 3:
+        print(f"Arguments must be: {sys.argv[0]} [FILE_1] [FILE_2]")
+        exit(1)
+
+    df_1 = get_df(sys.argv[1])
+    df_2 = get_df(sys.argv[2])
+
+    df_result = calcular_valores(df_1, df_2)
+
+    if df_result is not None:
+        # Guardar el nuevo DataFrame en un archivo CSV
+        df_result.to_csv(get_output_path(sys.argv[1]), index=False)
