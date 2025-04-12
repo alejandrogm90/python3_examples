@@ -23,7 +23,6 @@ import urllib.request
 
 def local_ip():
     """ Return your local IP """
-    respuesta = ""
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.connect(("8.8.8.8", 80))
     respuesta = s.getsockname()[0]
