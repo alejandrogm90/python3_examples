@@ -33,7 +33,7 @@ You need install first:
 - Clone the repo:
 
 ```shell
-git clone https://github.com/alejandrogm90/coin-comparator.git
+git clone https://github.com/alejandrogm90/python3_examples.git
 ```
 
 - Install all requirements:
@@ -76,6 +76,11 @@ Don't forget to give the project a star! Thanks again!
 
 Distributed under the License. See `LICENSE.txt` for more information.
 
+## documentation
+- https://www.python.org/doc/
+- https://www.pygame.org/docs/
+- https://cienciadedatos.net/documentos/pygml01-introduccion-grafos-redes-python.html
+
 ## Contact
 
 Alejandro Gómez - [@alejandrogm90][profile-url]
@@ -98,15 +103,15 @@ pipenv run python -m unittest test/utils/test_common_functions.py
 
 [version-shield]: https://img.shields.io/badge/version-1.0.0-blue?style=for-the-badge
 
-[contributors-shield]: https://img.shields.io/github/contributors/alejandrogm90/coin-comparator.svg?style=for-the-badge
+[contributors-shield]: https://img.shields.io/github/contributors/alejandrogm90/python3_examples.svg?style=for-the-badge
 
-[forks-shield]: https://img.shields.io/github/forks/alejandrogm90/coin-comparator.svg?style=for-the-badge
+[forks-shield]: https://img.shields.io/github/forks/alejandrogm90/python3_examples.svg?style=for-the-badge
 
-[stars-shield]: https://img.shields.io/github/stars/alejandrogm90/coin-comparator.svg?style=for-the-badge
+[stars-shield]: https://img.shields.io/github/stars/alejandrogm90/python3_examples.svg?style=for-the-badge
 
-[issues-shield]: https://img.shields.io/github/issues/alejandrogm90/coin-comparator.svg?style=for-the-badge
+[issues-shield]: https://img.shields.io/github/issues/alejandrogm90/python3_examples.svg?style=for-the-badge
 
-[license-shield]: https://img.shields.io/github/license/alejandrogm90/coin-comparator.svg?style=for-the-badge
+[license-shield]: https://img.shields.io/github/license/alejandrogm90/python3_examples.svg?style=for-the-badge
 
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 
@@ -114,19 +119,19 @@ pipenv run python -m unittest test/utils/test_common_functions.py
 
 [profile-url]: https://github.com/alejandrogm90
 
-[project-url]: https://github.com/alejandrogm90/coin-comparator/
+[project-url]: https://github.com/alejandrogm90/python3_examples/
 
-[wiki-url]: https://github.com/alejandrogm90/coin-comparator/wiki
+[wiki-url]: https://github.com/alejandrogm90/python3_examples/wiki
 
-[contributors-url]: https://github.com/alejandrogm90/coin-comparator/graphs/contributors
+[contributors-url]: https://github.com/alejandrogm90/python3_examples/graphs/contributors
 
-[forks-url]: https://github.com/alejandrogm90/coin-comparator/network/members
+[forks-url]: https://github.com/alejandrogm90/python3_examples/network/members
 
-[stars-url]: https://github.com/alejandrogm90/coin-comparator/stargazers
+[stars-url]: https://github.com/alejandrogm90/python3_examples/stargazers
 
-[issues-url]: https://github.com/alejandrogm90/coin-comparator/issues
+[issues-url]: https://github.com/alejandrogm90/python3_examples/issues
 
-[license-url]: https://github.com/alejandrogm90/coin-comparator/blob/master/LICENSE.txt
+[license-url]: https://github.com/alejandrogm90/python3_examples/blob/master/LICENSE.txt
 
 [linkedin-url]: https://www.linkedin.com/in/alejandro-g-762869129/
 

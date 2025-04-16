@@ -1,0 +1,11 @@
+Vertex,Adjacent
+A,B
+A,C
+B,A
+B,C
+B,D
+C,A
+C,B
+D,B
+E,B
+E,C

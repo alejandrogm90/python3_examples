@@ -8,6 +8,8 @@ pyfiglet = "*"
 pyserial = "*"
 pythonnet = "*"
 pandas = "*"
+networkx = "*"
+matplotlib = "*"
 
 [dev-packages]
 
