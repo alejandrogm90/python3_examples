@@ -12,7 +12,7 @@ ibex = yfinance.download('IBEX.MC', start=start_date, end=end_date)
 ibex['Fecha'] = ibex.index
 
 # Volcar los datos en un fichero CSV
-ibex.to_csv('ibex35.csv', index=False)
+ibex.to_csv('tests/data/ibex35.csv', index=False)
 
 # Obtener las empresas que componen el IBEX 35
 empresas_ibex = [
@@ -27,11 +27,11 @@ df_empresas = pandas.DataFrame(columns=['Empresa', 'Valor', 'Fecha'])
 # Iterar sobre las empresas y descargar los datos
 for empresa in empresas_ibex:
     datos_empresa = yfinance.download(empresa, start=start_date, end=end_date)['Close']
-    for
-    df_empresa = pandas.DataFrame({'Fecha': datos_empresa.index, 'empresa': empresa, 'Valor': datos_empresa.values})
-    df_empresas = pandas.concat([df_empresas, df_empresa])
+    for elemento in datos_empresa:
+        df_empresa = pandas.DataFrame({'Fecha': elemento.index, 'empresa': empresa, 'Valor': elemento.values})
+        df_empresas = pandas.concat([df_empresas, df_empresa])
 
 # Volcar los datos en un fichero CSV
-df_empresas.to_csv('empresas_ibex35.csv', index=False)
+df_empresas.to_csv('tests/data/empresas_ibex35.csv', index=False)
 
 print(df_empresas)

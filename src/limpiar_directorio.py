@@ -13,7 +13,7 @@ def eliminar_ficheros_cero_bytes(ruta: str) -> None:
             try:
                 if os.path.getsize(ruta_file) == 0:
                     os.remove(ruta_file)
-                    print(f"Eliminado fichero {ruta_file} con 0 bytes")
+                    print(f"Eliminado fichero '{ruta_file}' con 0 bytes")
             except Exception as e:
                 print(f"Error al procesar {ruta_file}: {e}")
 
