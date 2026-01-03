@@ -58,6 +58,10 @@ ls src | pipenv run python src/sort_list.py
 ls src | pipenv run python src/sort_list_reverse.py
 ```
 
+```shell
+pipenv run python src/info_IBEX35.py
+```
+
 _For more examples, please refer to the [Documentation][wiki-url]_
 
 ## Contributing

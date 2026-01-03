@@ -10,8 +10,9 @@ pythonnet = "*"
 pandas = "*"
 networkx = "*"
 matplotlib = "*"
+yfinance = "*"
+pandas-stubs = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.7^"
