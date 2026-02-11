@@ -32,8 +32,8 @@ if __name__ == '__main__':
         cf.error_msg(1, "Erroneous parameter number.")
 
     # Add Banner
-    cf.print_mega_banner("PORT SCANNER")
-    textList = list()
+    cf.print_banner(".", ["PORT SCANNER"])
+    textList = []
     textList.append("Scanning Target: " + target)
     textList.append("Scanning started at:" + str(datetime.now()))
     cf.print_banner(".", textList)
@@ -47,7 +47,7 @@ if __name__ == '__main__':
             # returns an error indicator
             result = s.connect_ex((target, port))
             if result == 0:
-                print("Port {0} is open".format(port))
+                print(f"Port {port} is open")
             s.close()
 
     except KeyboardInterrupt:

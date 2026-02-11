@@ -134,3 +134,5 @@ __init__.py
 # IDEs
 .idea/
 .vscode/
+
+data/

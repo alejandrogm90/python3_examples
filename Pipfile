@@ -10,9 +10,9 @@ pythonnet = "*"
 pandas = "*"
 networkx = "*"
 matplotlib = "*"
-yfinance = "*"
-pandas-stubs = "*"
+selenium = "*"
 
 [dev-packages]
+bandit = "*"
 
 [requires]

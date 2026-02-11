@@ -42,7 +42,7 @@ if __name__ == '__main__':
     cf.show_script_info(info)
 
     config = configparser.ConfigParser()
-    config.read_file(open("logging.conf", "r"))
+    config.read_file(open("config/logging.conf", "r"))
     SECTION_NAME_1 = 'loggers'
     KEY_1 = 'keys'
     VALUE_1 = config.get(SECTION_NAME_1, KEY_1)
