@@ -24,8 +24,8 @@ import common_functions as cf
 
 # GLOBALS
 SALTO_LINEA = "\n"
-FICHERO_SERBIDORES_LINUX = "/etc/hosts"
-FICHERO_SERBIDORES_WINDOWS = "/etc/hosts"
+FICHERO_SERVIDORES_LINUX = "/etc/hosts"
+FICHERO_SERVIDORES_WINDOWS = "/etc/hosts"
 
 
 class Dominio():
@@ -35,20 +35,20 @@ class Dominio():
         if nombre2 != "":
             self.listaNombres.append(nombre2)
 
-    def devolverNombre(self):
+    def devolver_nombre(self):
         return self.nombre
 
-    def devolverListaNombres(self):
+    def devolver_lista_nombres(self):
         return self.listaNombres
 
-    def existeElemento(self, nombre):
+    def existe_elemento(self, nombre):
         for elemento in self.listaNombres:
             if elemento == nombre:
                 return True
         return False
 
-    def agregarNombre(self, nombre):
-        if not self.existeElemento(nombre):
+    def agregar_nombre(self, nombre):
+        if not self.existe_elemento(nombre):
             self.listaNombres.append(nombre)
 
     def __str__(self):
@@ -58,24 +58,24 @@ class Dominio():
         return texto
 
 
-class Gestor():
+class Gestor:
     def __init__(self):
         self.listaDominios = []
         self.cabecera = []
 
-    def devolverCabecera(self):
+    def devolver_cabecera(self):
         return self.cabecera
 
-    def devolverListaDominios(self):
+    def devolver_lista_dominios(self):
         return self.listaDominios
 
-    def existeDominio(self, dominio):
+    def existe_dominio(self, dominio):
         for elemento in self.listaDominios:
-            if dominio.devolverNombre() == elemento.devolverNombre():
+            if dominio.devolver_nombre() == elemento.devolver_nombre():
                 return True
         return False
 
-    def leerFichero(self, direccion):
+    def leer_fichero(self, direccion):
         f1 = open(direccion, "r")
         lineas = f1.readlines()
         f1.close()
@@ -86,22 +86,21 @@ class Gestor():
             else:
                 self.cabecera.append(linea2)
 
-    def agregarDominio(self, dominio):
+    def agregar_dominio(self, dominio):
         existe = False
         for elemento in self.listaDominios:
-            if dominio.devolverNombre() == elemento.devolverNombre():
+            if dominio.devolver_nombre() == elemento.devolver_nombre():
                 existe = True
-                for nombre in dominio.devolverListaNombres():
-                    elemento.agregarNombre(nombre)
+                for nombre in dominio.devolver_lista_nombres():
+                    elemento.agregar_nombre(nombre)
                 break
         if not existe:
             self.listaDominios.append(dominio)
 
     def combinar(self, dominio_B):
-        self.cabecera = dominio_B.devolverCabecera()
-        listaDominios2 = []
-        for dominio in dominio_B.devolverListaDominios():
-            self.agregarDominio(dominio)
+        self.cabecera = dominio_B.devolver_cabecera()
+        for dominio in dominio_B.devolver_lista_dominios():
+            self.agregar_dominio(dominio)
 
     def __str__(self):
         texto = ""
@@ -112,18 +111,19 @@ class Gestor():
         return texto
 
 
-def devolverFicheroSerbidores():
+def devolver_fichero_servidores() -> str | None:
     if platform.system() == "Windows":
-        return FICHERO_SERBIDORES_WINDOWS
+        return FICHERO_SERVIDORES_WINDOWS
     elif platform.system() == "Linux":
-        return FICHERO_SERBIDORES_LINUX
+        return FICHERO_SERVIDORES_LINUX
     else:
         cf.error_msg(3, "Plataforma no soportada")
+        return None
 
 
 if __name__ == '__main__':
     # Add Banner
-    cf.print_mega_banner(cf.get_file_name(sys.argv[0], True).split(".")[0])
+    cf.print_banner("#",[cf.get_file_name(sys.argv[0], True).split(".")[0]])
     print("")
 
     if len(sys.argv) == 2:
@@ -132,20 +132,20 @@ if __name__ == '__main__':
         else:
             # Origen
             gestor_1 = Gestor()
-            gestor_1.leerFichero(devolverFicheroSerbidores())
+            gestor_1.leer_fichero(devolver_fichero_servidores())
             # Datos
             gestor_2 = Gestor()
-            gestor_2.leerFichero(sys.argv[1])
+            gestor_2.leer_fichero(sys.argv[1])
             # Combinación
             gestor_1.combinar(gestor_2)
             print(gestor_1)
     elif len(sys.argv) == 3:
         # Origen
         gestor_1 = Gestor()
-        gestor_1.leerFichero(devolverFicheroSerbidores())
+        gestor_1.leer_fichero(devolver_fichero_servidores())
         dominio_1 = Dominio(sys.argv[1], sys.argv[2])
         # print(dominio_1)
-        gestor_1.agregarDominio(dominio_1)
+        gestor_1.agregar_dominio(dominio_1)
         print(gestor_1)
     else:
         cf.error_msg(1, "Número de parámetros erróneos")

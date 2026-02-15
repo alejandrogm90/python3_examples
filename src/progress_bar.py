@@ -18,7 +18,7 @@
 
 import time
 
-REFRES_TIME = 0.4
+REFRESH_TIME = 0.4
 BAR_LEN = 24
 # elements = ['-', '\\', '|', '/']
 elements = ['-', '*']
@@ -32,5 +32,5 @@ for i in range(BAR_LEN + 1):
     # print(f'\r[{elements[frame]*i:=>{BAR_LEN}}]', end="")
     # Desde el centro
     # print(f'\r[{elements[frame]*i:=^{BAR_LEN}}]', end="")
-    time.sleep(REFRES_TIME)
+    time.sleep(REFRESH_TIME)
 print()
