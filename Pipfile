@@ -12,6 +12,8 @@ networkx = "*"
 matplotlib = "*"
 selenium = "*"
 pandas-stubs = "~=3.0.0"
+requests = "*"
+dotenv = "*"
 
 [dev-packages]
 bandit = "*"

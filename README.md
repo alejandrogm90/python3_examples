@@ -59,36 +59,42 @@ On terminal:
 
 - Easy example of nodes
   ![nodes-image]
-
 ```shell
 pipenv run python src/nodos.py
 ```
 
 - Easy example to sort list
-
 ```shell
 ls src | pipenv run python src/sort_list.py
 ```
 
 - Reverse mode
-
 ```shell
 ls src | pipenv run python src/sort_list_reverse.py
 ```
 
 - Load last status of IBEX35 in a CSV file
-
 ```shell
 pipenv run python src/src/bolsa_info_IBEX35.py
 ```
 
 - Debugging with bandit:
-
 ```shell
 pipenv run python -m bandit -r src/
 ```
-
 _For more examples, please refer to the [Documentation][wiki-url]_
+
+### Usage of [script_manager_api][script_manager_api-url] (USING A JWT TOKEN)
+- Launch a script in my host:
+```shell
+pipenv run python src/consult_using_token.py hello.sh link1 link2 link3
+```
+
+- Get last scripts launches in my host:
+```shell
+pipenv run python src/launch_script_using_token.py -l
+```
+_For more documentation, visit [script_manager_api][script_manager_api-url]_
 
 ## Contributing
 
@@ -152,3 +158,4 @@ pipenv run python -m unittest test/utils/test_common_functions.py
 [license-url]: https://github.com/alejandrogm90/python3_examples/blob/master/LICENSE.txt
 [linkedin-url]: https://www.linkedin.com/in/alejandro-g-762869129/
 [python-url]: https://www.python.org/
+[script_manager_api-url]: https://github.com/alejandrogm90/script_manager_api
