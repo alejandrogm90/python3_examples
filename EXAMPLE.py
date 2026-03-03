@@ -29,8 +29,6 @@ LOG_FILE = cf.get_file_name(sys.argv[0]) + ".log"
 today = datetime.date.today()
 
 if __name__ == '__main__':
-    # Add Banner
-    ef.print_mega_banner(cf.get_file_name(sys.argv[0], True))
     # Show script info
     info = {
         "name": str(cf.get_file_name(sys.argv[0], True)),

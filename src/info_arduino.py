@@ -20,64 +20,17 @@ import os
 import time
 import serial
 
+from extended_functions import get_cpu_temperature, get_cpu_use, get_disk_space, get_ram_info, print_full_hardware_info
+
 # Settings for reading from Arduino Serial
 SERIAL_PORT = "/dev/ttyACM0"
 BAUD_RATE = 115200
 
 
-def get_cpu_temperature():
-    """ Return CPU temperature as a character string """
-    res = os.popen('vcgencmd measure_temp').readline()
-    return res.replace("temp=", "").replace("'C\n", "")
-
-
-def get_cpu_use():
-    """ Return % of CPU used by user as a character string """
-    #return str(os.popen('top -n1 | grep "Cpu(s):"').readlines())
-    res = str(os.popen('lscpu | grep "MHz:"').readline()).strip().replace(' ', '')
-    return res.split(':')[1]
-
-
-def get_ram_info():
-    """
-    Return RAM information (unit=kb) in a list
-    Index 0: total RAM
-    Index 1: used RAM
-    Index 2: free RAM
-    """
-    p = os.popen('free')
-    i = 0
-    while 1:
-        i = i + 1
-        line = p.readline()
-        if i == 2:
-            return line.split()[1:4]
-
-
-def get_disk_space():
-    """
-    Return information about disk space as a list (unit included)
-    Index 0: total disk space
-    Index 1: used disk space
-    Index 2: remaining disk space
-    Index 3: percentage of disk used 
-    """
-    p = os.popen("df -h /")
-    i = 0
-    while 1:
-        i = i + 1
-        line = p.readline()
-        if i == 2:
-            return line.split()[1:5]
-
-
 if __name__ == '__main__':
     if not os.path.exists(SERIAL_PORT):
-        print(get_cpu_temperature())
-        print(get_cpu_use())
-        print(get_ram_info())
-        print(get_disk_space())
-        print("Arduino is not connected")
+        print_full_hardware_info()
+        print("\nArduino is not connected\n")
     else:
         ser = serial.Serial(SERIAL_PORT, BAUD_RATE, timeout=0.5)
         time.sleep(2)
