@@ -16,30 +16,9 @@
 #       You should have received a copy of the GNU General Public License
 #       along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import socket
 import sys
-import urllib.request
 
-
-def local_ip():
-    """ Return your local IP """
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s.connect(("8.8.8.8", 80))
-    respuesta = s.getsockname()[0]
-    s.close()
-    return respuesta
-
-
-def global_ip():
-    """ Return your global IP """
-    response = urllib.request.urlopen('http://www.vermiip.es/')
-    html = response.read()
-    cad1 = str(html)
-    cad1 = cad1.split('id="cuerpo"')[1]
-    cad1 = cad1.split('h2')[1]
-    cad1 = cad1.split(' ')[4].split('<')[0]
-    return cad1
-
+from extended_functions import global_ip, local_ip
 
 if __name__ == '__main__':
     if len(sys.argv) >= 2:

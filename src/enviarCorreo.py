@@ -17,38 +17,58 @@
 #       along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import sys
-from email.mime.text import MIMEText
-from smtplib import SMTP
+import smtplib
 
 import common_functions as cf
 
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
-def send_mail(file: str, sender: str, sender_pass: str, destiny: str, server_name: str, server_port: int):
-    mime_message = MIMEText(file)
-    mime_message["From"] = sender
-    mime_message["To"] = destiny
-    mime_message["Content-type"] = "text/html"
-    mime_message["Subject"] = "INFO"
 
-    server = SMTP(server_name, server_port)
-    server.ehlo()
-    server.starttls()
-    server.ehlo()
-    server.login(sender, sender_pass)
-    server.sendmail(sender, destiny, mime_message.as_string())
-    server.quit()
+def send_mail(body: str, sender_email: str, password: str, receiver_email: str, server_name: str, server_port: int):
+    try:
+        # Create a multipart email
+        msg = MIMEMultipart()
+        msg['From'] = sender_email
+        msg['To'] = receiver_email
+        msg['Subject'] = "INFO"
+        msg.attach(MIMEText(body, 'plain'))
+
+        with smtplib.SMTP(server_name, server_port) as server:
+            server.starttls()  # Secure the connection
+            server.login(sender_email, password)  # Login to the server
+            server.sendmail(sender_email, receiver_email, msg.as_string())  # Send the email
+            print("Email sent successfully!")
+    except smtplib.SMTPAuthenticationError:
+        cf.error_msg(6, "Error: Authentication failed. Check your credentials.")
+    except smtplib.SMTPConnectError:
+        cf.error_msg(7, "Error: Could not connect to the SMTP server. Please check the server address and port.")
+    except smtplib.SMTPRecipientsRefused:
+        cf.error_msg(8, "Error: The recipient's address was refused by the server.")
+    except smtplib.SMTPDataError:
+        cf.error_msg(9, "Error: The SMTP server responded with an error to the data.")
+    except Exception as e:
+        cf.error_msg(10, f"An unexpected error occurred: {e}")
 
 
 if __name__ == "__main__":
     if len(sys.argv) == 7:
+        message_text = ""
+        file_path = sys.argv[1]
         try:
-            fo = open(sys.argv[1], "r+")
+            fo = open(file_path, "r+")
             message_text = fo.read()
             fo.close()
+        except FileNotFoundError:
+            cf.error_msg(2, f"Error: The file '{file_path}' does not exist.")
+        except PermissionError:
+            cf.error_msg(3, f"Error: You do not have permission to access '{file_path}'.")
+        except IsADirectoryError:
+            cf.error_msg(4, f"Error: '{file_path}' is a directory, not a file.")
+        except Exception as e:
+            cf.error_msg(5, f"An unexpected error occurred: {e}")
 
-            send_mail(message_text, sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], int(sys.argv[6]))
-        except:
-            cf.error_msg(2, "Error reading file")
+        send_mail(message_text, sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], int(sys.argv[6]))
     else:
         cf.info_msg("file_path: str, sender_email: str, sender_pass: str, destiny_email: str, server: str, port: int")
         cf.error_msg(1, "Wrong parameters")
