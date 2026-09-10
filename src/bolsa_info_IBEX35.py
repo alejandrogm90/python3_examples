@@ -27,7 +27,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 import common_functions as cf
 
 if __name__ == '__main__':
-    TARGET_FOLDER = "~/Bolsa"
+    output_directory = os.getenv("PATH_BOLSA", "~/Bolsa")
     # URL de la página oficial de la Bolsa de Madrid
     url = ('https://www.bolsasymercados.es/bme-exchange/es/Mercados-y-Cotizaciones/Acciones/Mercado-Continuo/Precios/'
            'ibex-35-ES0SI0000005')
@@ -57,10 +57,10 @@ if __name__ == '__main__':
     columnas = ['Nombre', 'Último', '% Dif', 'Máximo', 'Mínimo', 'Volumen', 'Efectivo (miles €)', 'Fecha', 'Hora']
     df = pd.DataFrame(datos, columns=columnas)
 
-    if not os.path.exists(TARGET_FOLDER):
-        os.makedirs(TARGET_FOLDER)
+    if not os.path.exists(output_directory):
+        os.makedirs(output_directory)
     # Volcar los datos en un fichero CSV
-    df.to_csv(f'{TARGET_FOLDER}/info_Ibex35_{cf.get_date()}.csv', index=False)
+    df.to_csv(f'{output_directory}/info_Ibex35_{cf.get_date()}.csv', index=False)
 
     # Cerrar el navegador
     driver.quit()

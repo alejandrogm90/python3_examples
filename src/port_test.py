@@ -20,7 +20,7 @@ import socket
 import sys
 from datetime import datetime
 
-import common_functions as cf
+from .common_functions import error_msg, info_msg, print_banner
 
 if __name__ == '__main__':
     target = ""
@@ -28,15 +28,13 @@ if __name__ == '__main__':
         # translate hostname to IPv4
         target = socket.gethostbyname(sys.argv[1])
     else:
-        cf.info_msg(sys.argv[0] + " [HOST_NAME]")
-        cf.error_msg(1, "Erroneous parameter number.")
+        info_msg(sys.argv[0] + " [HOST_NAME]")
+        error_msg(1, "Erroneous parameter number.")
 
     # Add Banner
-    cf.print_banner(".", ["PORT SCANNER"])
-    textList = []
-    textList.append("Scanning Target: " + target)
-    textList.append("Scanning started at:" + str(datetime.now()))
-    cf.print_banner(".", textList)
+    print_banner(".", ["PORT SCANNER"])
+    textList = ["Scanning Target: " + target, "Scanning started at:" + str(datetime.now())]
+    print_banner(".", textList)
 
     try:
         # will scan ports between 1 to 65,535

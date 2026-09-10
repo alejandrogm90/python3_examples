@@ -23,7 +23,7 @@ from bs4 import BeautifulSoup
 # Globals
 WEB = "https://www.instant-gaming.com/es/"
 WEB = "https://www.instant-gaming.com/en/"
-WEB2 = "http://www.instant-gaming.com/"
+WEB2 = "https://www.instant-gaming.com/"
 WEB3 = "https://www.wikipedia.org/"
 
 

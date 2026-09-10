@@ -19,39 +19,33 @@
 import sys
 from asyncio.windows_events import NULL
 
-DELIMITER = '='
 
-
-def show_error(num, text):
-    print(text)
-    sys.exit(num)
-
-
-class propertiesFile():
+class PropertiesFile:
     def __init__(self, location):
         self.file_location = location
         self.propiedades = list()
         current_file = open(self.file_location, 'r', encoding="utf-8")
         line = current_file.readline()
         while line:
-            propiedad = self.esPropiedad(line)
+            propiedad = self.es_propiedad(line)
             if propiedad != NULL:
                 self.propiedades.append(propiedad)
             line = current_file.readline()
 
-    def getNumPropiedades(self):
+    def get_num_propiedades(self):
         return len(self.propiedades)
 
-    def getPropiedades(self):
+    def get_propiedades(self):
         return self.propiedades
 
-    def getPropiedad(self, indice):
+    def get_propiedad(self, indice):
         for propiedad in self.propiedades:
             if indice == propiedad[0]:
                 return propiedad
         return NULL
 
-    def esPropiedad(self, line):
+    @staticmethod
+    def es_propiedad(line):
         if line[0] != ' ' and "=" in line:
             partes = line.split("=")
             # if partes[0] != "":
@@ -60,48 +54,48 @@ class propertiesFile():
                 return partes
         return NULL
 
-    def existePropiedad(self, propiedad):
-        resultado = ""
+    def existe_propiedad(self, propiedad):
         for propiedadActual in self.propiedades:
             if propiedad == propiedadActual[0]:
                 return True
         return False
 
     def contiene(self, fichero):
-        numPropiNoExisten = 0
+        num_propiedad_no_existente = 0
         for propiedadActual in self.propiedades:
-            if not fichero.existePropiedad(propiedadActual[0]):
+            if not fichero.existe_propiedad(propiedadActual[0]):
                 print("[WARN] No existe: " + propiedadActual[0])
-                numPropiNoExisten = numPropiNoExisten + 1
-        if numPropiNoExisten > 0:
-            print("[ERROR] Faltan " + str(numPropiNoExisten) + " propiedades")
+                num_propiedad_no_existente = num_propiedad_no_existente + 1
+        if num_propiedad_no_existente > 0:
+            print("[ERROR] Faltan " + str(num_propiedad_no_existente) + " propiedades")
         else:
             print("[MSG] Contiene todas las propiedades")
 
     def contiene2(self, fichero):
-        numPropiNoExisten = 0
+        num_propiedad_no_existente = 0
         for propiedadActual in self.propiedades:
-            exitste = ""
-            for propiedadOtro in fichero.getPropiedades():
+            existe = ""
+            for propiedadOtro in fichero.get_propiedades():
                 if propiedadOtro[0] == propiedadActual[0]:
-                    exitste = "si"
+                    existe = "si"
                     break
-            if exitste == "":
+            if existe == "":
                 print("[WARN] No existe: " + propiedadActual[0])
-                numPropiNoExisten = numPropiNoExisten + 1
-        if numPropiNoExisten > 0:
-            print("[ERROR] Faltan " + str(numPropiNoExisten) + " propiedades")
+                num_propiedad_no_existente = num_propiedad_no_existente + 1
+        if num_propiedad_no_existente > 0:
+            print("[ERROR] Faltan " + str(num_propiedad_no_existente) + " propiedades")
         else:
             print("[MSG] Contiene todas las propiedades")
 
 
 if __name__ == '__main__':
     if len(sys.argv) != 3:
-        show_error(1, "ERROR:\n" + sys.argv[0] + " fichero1.csv fichero2.csv")
+        print("ERROR:\n" + sys.argv[0] + " fichero1.csv fichero2.csv")
+        sys.exit(1)
 
-    FIRST_FILE = propertiesFile(sys.argv[1])
-    SECOND_FILE = propertiesFile(sys.argv[2])
+    FIRST_FILE = PropertiesFile(sys.argv[1])
+    SECOND_FILE = PropertiesFile(sys.argv[2])
 
     FIRST_FILE.contiene(SECOND_FILE)
-    print(str(FIRST_FILE.getNumPropiedades()) + " - " + str(SECOND_FILE.getNumPropiedades()) + " = " + str(
-        FIRST_FILE.getNumPropiedades() - SECOND_FILE.getNumPropiedades()))
+    print(str(FIRST_FILE.get_num_propiedades()) + " - " + str(SECOND_FILE.get_num_propiedades()) + " = " + str(
+        FIRST_FILE.get_num_propiedades() - SECOND_FILE.get_num_propiedades()))

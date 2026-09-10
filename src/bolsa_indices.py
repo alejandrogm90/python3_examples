@@ -17,6 +17,7 @@
 #       along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
+import sys
 
 import pandas as pd
 from selenium import webdriver
@@ -27,7 +28,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 import common_functions as cf
 
 if __name__ == '__main__':
-    TARGET_FOLDER = "~/Bolsa"
+    output_directory = os.getenv("PATH_BOLSA", "~/Bolsa")
     # URL de la página oficial de la Bolsa de Madrid
     URL = 'https://www.bolsasymercados.es/bme-exchange/es/Indices/Resumen'
 
@@ -52,15 +53,19 @@ if __name__ == '__main__':
         cols = fila.find_elements(By.TAG_NAME, 'td')
         datos.append([col.text.strip() for col in cols])
 
+    # Cerrar el navegador
+    driver.quit()
+
     # Crear un DataFrame con los datos financieros
     columnas = ['Índice', 'Último', '% Dif', 'Máximo',
                 'Mínimo', 'Fecha', 'Hora', '% Dif.Año']
     df = pd.DataFrame(datos, columns=columnas)
 
-    if not os.path.exists(TARGET_FOLDER):
-        os.makedirs(TARGET_FOLDER)
+    if not os.path.exists(output_directory):
+        try:
+            os.makedirs(output_directory)
+        except PermissionError:
+            print(f"Error: No tienes permisos para crear '{output_directory}'.")
+            sys.exit(1)
     # Volcar los datos en un fichero CSV
-    df.to_csv(f'{TARGET_FOLDER}/Índices_{cf.get_date()}.csv', index=False)
-
-    # Cerrar el navegador
-    driver.quit()
+    df.to_csv(f'{output_directory}/Índices_{cf.get_date()}.csv', index=False)

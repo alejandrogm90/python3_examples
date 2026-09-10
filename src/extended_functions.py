@@ -32,7 +32,7 @@ def local_ip():
 
 def global_ip() -> str:
     """ Return your global IP """
-    response = requests.get('http://www.vermiip.es/')
+    response = requests.get('https://www.vermiip.es/')
     cad1 = ""
     # Verificar que la solicitud fue exitosa
     if response.status_code == 200:

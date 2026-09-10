@@ -16,23 +16,16 @@
 #       You should have received a copy of the GNU General Public License
 #       along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import time
+import datetime
+from datetime import date
 
 
-if __name__ == '__main__':
-    REFRESH_TIME = 0.4
-    BAR_LEN = 24
-    # elements = ['-', '\\', '|', '/']
-    elements = ['-', '*']
+select_date = '2019-12-24'
+d1 = date.fromisoformat(select_date)
+print(f'Date d1 ({select_date}) in date format: {d1}')
 
-    for i in range(BAR_LEN + 1):
-        frame = i % len(elements)
-        # print(f'\r[{elements[frame]*i}]', end="")
-        #  Normal
-        print(f'\r[{elements[frame] * i:=<{BAR_LEN}}]', end="")
-        # Desde atrás
-        # print(f'\r[{elements[frame]*i:=>{BAR_LEN}}]', end="")
-        # Desde el centro
-        # print(f'\r[{elements[frame]*i:=^{BAR_LEN}}]', end="")
-        time.sleep(REFRESH_TIME)
-    print()
+d2 = date(d1.year, d1.month, d1.day + 3)
+print(f'Date d2 from d1 ({select_date}) + 3 days: {d2}')
+
+d3 = d2 + datetime.timedelta(days=10)
+print(f'Date dd3 from d2 ({d2}) + 10 days: {d3}')

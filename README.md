@@ -127,16 +127,16 @@ Project Link: [project-url]
 <!--
 pipenv install --dev bandit
 pip freeze > requirements.txt
-pipreqs --force
+pipenv install -r requirements.txt
 
+pipreqs --force
+pipenv install -r requirements.txt
 pipenv update
 pipenv requirements > requirements.txt
 pipenv run python setup.py bdist_wheel
 
-pipenv run python script.py
-pipenv run python -m unittest discover
-pipenv run python -m unittest
-pipenv run python -m unittest test/utils/test_common_functions.py
+pipenv run pytest
+pipenv run python -m unittest tests/*.py
 -->
 
 [nodes-image]: doc/nodes.png
