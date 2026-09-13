@@ -23,7 +23,7 @@ import pandas
 
 def exit_msg(exit_number: int, message: str) -> None:
     print(f"ERROR: {message}")
-    exit(exit_number)
+    sys.exit(exit_number)
 
 def get_df(file_path: str) -> pandas.DataFrame | None:
     extension = file_path.split(".")[-1]
@@ -33,16 +33,16 @@ def get_df(file_path: str) -> pandas.DataFrame | None:
                 return pandas.read_csv(file_path)
             elif extension == "xlsx":
                 return pandas.read_excel(file_path)
+            else:
+                exit_msg(5, f"Error: El fichero {file_path} no tiene una extensión válida (csv o xlsx)")
     except FileNotFoundError:
-        print(f"Error: El ficheros {file_path} no existe")
-        sys.exit(1)
+        exit_msg(2, f"Error: El ficheros {file_path} no existe")
     except pandas.errors.EmptyDataError:
-        print(f"Error: El fichero {file_path} está vacío")
-        sys.exit(1)
+        exit_msg(3, f"Error: El fichero {file_path} está vacío")
     except pandas.errors.ParserError:
-        print(f"Error: Error al parsear el fichero {file_path}")
+        exit_msg(4, f"Error: Error al parsear el fichero {file_path}")
 
-def get_output_path(file_path: str) -> str:
+def new_output_path(file_path: str) -> str:
     extension = file_path.split(".")[-1]
     new_extension = "_diferencias.csv"
     if extension == "xlsx":
@@ -104,8 +104,7 @@ def calcular_valores(df_left: pandas.DataFrame, df_right: pandas.DataFrame) -> p
 
 if __name__ == '__main__':
     if len(sys.argv) != 3:
-        print(f"Arguments must be: {sys.argv[0]} [FILE_1] [FILE_2]")
-        exit(1)
+        exit_msg(1,f"Arguments must be: {sys.argv[0]} [FILE_1] [FILE_2]")
 
     df_1 = get_df(sys.argv[1])
     df_2 = get_df(sys.argv[2])
@@ -114,4 +113,4 @@ if __name__ == '__main__':
 
     if df_result is not None:
         # Guardar el nuevo DataFrame en un archivo CSV
-        df_result.to_csv(get_output_path(sys.argv[1]), index=False)
+        df_result.to_csv(new_output_path(sys.argv[1]), index=False)
